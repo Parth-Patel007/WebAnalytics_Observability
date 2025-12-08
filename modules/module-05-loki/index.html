@@ -43,10 +43,10 @@
         <div class="module-summary-card">
           <h2>Module outline</h2>
           <ul>
-            <li>Loki concepts & architecture</li>
-            <li>Ingesting logs from applications</li>
-            <li>Labels and log streams</li>
-            <li>Basic LogQL queries and patterns</li>
+            <li>Loki concepts &amp; where it fits in observability</li>
+            <li>Running Loki locally with Docker</li>
+            <li>Sending and exploring logs with LogQL</li>
+            <li>Reflecting on when Loki is a good choice</li>
           </ul>
         </div>
       </div>
@@ -59,44 +59,468 @@
 
       <!-- Sidebar nav -->
       <aside class="module-sidebar">
-        <p class="sidebar-title">Loki topics</p>
+        <p class="sidebar-title">Loki tutorial</p>
         <nav class="sidebar-nav">
-          <a href="#s1" class="sidebar-link active">1. Loki overview</a>
-          <a href="#s2" class="sidebar-link">2. Loki architecture</a>
-          <a href="#s3" class="sidebar-link">3. Ingesting logs</a>
-          <a href="#s4" class="sidebar-link">4. Labels & log streams</a>
-          <a href="#s5" class="sidebar-link">5. LogQL basics</a>
-          <a href="#s6" class="sidebar-link">6. Dashboards & alerts</a>
+          <a href="#s1" class="sidebar-link active">1. Tech name</a>
+          <a href="#s2" class="sidebar-link">2. Tech overview</a>
+          <a href="#s3" class="sidebar-link">3. Tech history</a>
+          <a href="#s4" class="sidebar-link">4. Our views on Loki</a>
+          <a href="#s5" class="sidebar-link">5. How to install &amp; run</a>
+          <a href="#s6" class="sidebar-link">6. What it does (example)</a>
+          <a href="#s7" class="sidebar-link">7. Quiz &amp; learnings</a>
+          <a href="#s8" class="sidebar-link">8. Conclusion</a>
         </nav>
       </aside>
 
-      <!-- Content skeleton -->
+      <!-- Content -->
       <article class="module-content">
+
+        <!-- Section 1 -->
         <section id="s1" class="module-section">
-          <h2>1. Loki overview</h2>
+          <h2>1. Tech name</h2>
+          <p>
+            In this module, you’ll be working with <strong>Grafana Loki</strong>,
+            a log aggregation system that is designed to fit naturally into a
+            Prometheus + Grafana observability stack.
+          </p>
+          <p>By the end of this tutorial you will be able to:</p>
+          <ul>
+            <li>Explain what Loki is and where it fits in observability.</li>
+            <li>Run a local Loki instance using Docker.</li>
+            <li>Connect Loki to Grafana as a data source.</li>
+            <li>Query logs using <strong>LogQL</strong> in Grafana Explore.</li>
+          </ul>
+
+          <div class="callout callout-note">
+            <p>
+              We’ll focus on a <em>hands-on workflow</em>: run Loki → send logs
+              → explore them → reflect on when Loki is a good choice.
+            </p>
+          </div>
         </section>
 
+        <!-- Section 2 -->
         <section id="s2" class="module-section">
-          <h2>2. Loki architecture</h2>
+          <h2>2. Tech overview (what it does)</h2>
+          <p>
+            When something goes wrong in your system, metrics can tell you
+            <strong>that</strong> there is a problem (for example, error rate is high).
+            Logs help you see <strong>what actually happened</strong>.
+          </p>
+          <p>
+            <strong>Loki</strong> is a <em>central place</em> to send logs from many
+            services (frontends, APIs, background workers, Kubernetes pods, and more).
+            It:
+          </p>
+          <ul>
+            <li>Accepts log lines from different clients (such as Promtail).</li>
+            <li>Adds <strong>labels</strong> to log streams like <code>app</code>,
+              <code>service</code>, or <code>env</code>.</li>
+            <li>Stores the logs efficiently, using labels as its main index.</li>
+            <li>Lets you search those logs with <strong>LogQL</strong>, especially
+              inside Grafana.</li>
+          </ul>
+
+          <div class="callout callout-note">
+            <p>
+              A useful mental model is:
+              <strong>“Prometheus, but for logs”</strong>.
+              Prometheus stores <em>metrics</em> with labels; Loki stores <em>logs</em>
+              with labels.
+            </p>
+          </div>
+
+          <div class="callout callout-exercise">
+            <h3>Mini activity</h3>
+            <p>Before you continue, take 1 minute to think of:</p>
+            <ul>
+              <li>One service in your system that produces logs.</li>
+              <li>Three kinds of messages you would want to see in those logs
+                (for example: failed logins, 500 errors, slow requests).</li>
+            </ul>
+            <p>Keep this in mind; we’ll use these ideas when you write LogQL queries.</p>
+          </div>
         </section>
 
+        <!-- Section 3 -->
         <section id="s3" class="module-section">
-          <h2>3. Ingesting logs</h2>
+          <h2>3. Tech history</h2>
+          <p>
+            You don’t need to memorise dates, but understanding the history
+            explains <em>why</em> Loki looks the way it does.
+          </p>
+          <ul>
+            <li>
+              <strong>Prometheus first:</strong> the cloud-native world adopted
+              Prometheus for metrics and loved its label-based model.
+            </li>
+            <li>
+              <strong>The logging gap:</strong> teams still needed a way to manage
+              logs that felt similar to Prometheus instead of a completely different,
+              heavy logging stack.
+            </li>
+            <li>
+              <strong>Grafana Loki:</strong> Grafana Labs created Loki to bring a
+              <em>Prometheus-style</em> approach to logs — label-based, cost-aware,
+              and tightly integrated with Grafana.
+            </li>
+          </ul>
+
+          <div class="callout callout-note">
+            <p>
+              Loki exists because teams wanted logging that <em>fits</em> into the same
+              world as Prometheus and Grafana, not a separate tool that behaves
+              completely differently.
+            </p>
+          </div>
         </section>
 
+        <!-- Section 4 -->
         <section id="s4" class="module-section">
-          <h2>4. Labels & log streams</h2>
+          <h2>4. Our views on this tech</h2>
+          <p>
+            This section is intentionally opinionated. You can adapt this
+            wording in your own report, especially if you need to explain
+            why you chose Loki.
+          </p>
+
+          <h3>Why we like Loki</h3>
+          <ul>
+            <li>
+              <strong>Same mental model as Prometheus:</strong>
+              both tools use labels. If you already filter metrics by
+              <code>service</code>, <code>job</code>, or <code>env</code>, you can
+              filter logs in almost the same way.
+            </li>
+            <li>
+              <strong>Cost-friendly:</strong>
+              Loki indexes <em>labels</em>, not every word in the log line.
+              This usually means smaller indexes and lower storage costs
+              compared to some full-text log platforms.
+            </li>
+            <li>
+              <strong>Great with Grafana:</strong>
+              Loki plugs straight into Grafana Explore and dashboards,
+              making it easy to jump from a metric panel directly to the
+              related logs.
+            </li>
+          </ul>
+
+          <h3>Trade-offs</h3>
+          <ul>
+            <li>
+              Loki is strongest when you have <em>good labels</em> and you mostly
+              filter logs by those labels plus a bit of text search.
+            </li>
+            <li>
+              If your main use-case is complex, ad-hoc full-text search over
+              unstructured logs, tools like Elasticsearch or Splunk can still be
+              more flexible (but also heavier and more expensive).
+            </li>
+          </ul>
+
+          <div class="callout callout-exercise">
+            <h3>Reflection</h3>
+            <p>
+              In 2–3 sentences, explain why Loki is a good choice for a
+              <em>teaching project</em> about observability. Think about:
+            </p>
+            <ul>
+              <li>Simplicity of the model.</li>
+              <li>Integration with Prometheus and Grafana.</li>
+              <li>Realism — this is a tool used in production.</li>
+            </ul>
+          </div>
         </section>
 
+        <!-- Section 5 -->
         <section id="s5" class="module-section">
-          <h2>5. LogQL basics</h2>
+          <h2>5. How to install &amp; run Loki</h2>
+          <p>
+            In this part you’ll run Loki locally using Docker and connect
+            it to Grafana. If you already have Loki running, you can skim this
+            and just make sure your setup matches the ideas.
+          </p>
+
+          <h3>Step 1 — Prerequisites</h3>
+          <ul>
+            <li>Docker installed and working.</li>
+            <li>Grafana available (for example via Docker as well).</li>
+            <li>Internet access to pull images.</li>
+          </ul>
+
+          <h3>Step 2 — Start Loki with Docker</h3>
+          <p>Run this command in a terminal:</p>
+
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">Terminal</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#cmd-loki-run"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="cmd-loki-run"><code class="language-bash">docker run -d --name loki \
+  -p 3100:3100 \
+  grafana/loki:latest \
+  -config.file=/etc/loki/local-config.yaml
+</code></pre>
+          </div>
+
+          <p>This:</p>
+          <ul>
+            <li>Runs Loki in the background (<code>-d</code>).</li>
+            <li>Exposes the HTTP API on <code>http://localhost:3100</code>.</li>
+            <li>Uses the built-in local configuration.</li>
+          </ul>
+
+          <div class="callout callout-exercise">
+            <h3>Checkpoint: is Loki running?</h3>
+            <ol>
+              <li>Run <code>docker ps</code> to list containers.</li>
+              <li>Confirm there is a container named <code>loki</code>.</li>
+              <li>
+                If something looks wrong, use <code>docker logs loki</code> to
+                look for error messages.
+              </li>
+            </ol>
+          </div>
+          
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">Terminal</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#cmd-loki-check"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="cmd-loki-check"><code class="language-bash">docker ps
+          docker logs loki
+          </code></pre>
+          </div>
+
+          <h3>Step 3 — Add Loki as a data source in Grafana</h3>
+          <ol>
+            <li>Open Grafana in your browser (for example <code>http://localhost:3000</code>).</li>
+            <li>Go to <strong>Configuration → Data sources</strong>.</li>
+            <li>Click <strong>Add data source</strong> and pick <strong>Loki</strong>.</li>
+            <li>Set the URL to <code>http://localhost:3100</code>.</li>
+            <li>Click <strong>Save &amp; test</strong> and confirm it succeeds.</li>
+          </ol>
+
+          <p>
+            In a full deployment you would also run a log shipper such as
+            <strong>Promtail</strong> to send logs into Loki. For this tutorial
+            we mainly care that Grafana can talk to Loki.
+          </p>
         </section>
 
+        <!-- Section 6 -->
         <section id="s6" class="module-section">
-          <h2>6. Dashboards & alerts</h2>
-        </section>
-      </article>
+          <h2>6. What it does (with an example)</h2>
+          <p>
+            Now let’s treat Loki like a real tool in your observability
+            workflow: we’ll query logs and see how they complement metrics.
+          </p>
 
+          <h3>Step 1 — Imagine your app’s logs</h3>
+          <p>
+            Suppose you have a small web analytics app with a frontend and an
+            <code>analytics-api</code> backend. The logs might look like:
+          </p>
+
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">Log output</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#log-sample"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="log-sample"><code class="language-text">INFO  [web-analytics-frontend] GET / page=/home status=200 duration=45ms
+INFO  [web-analytics-frontend] POST /track page=/pricing status=202
+ERROR [analytics-api] failed to write event user_id=123 error=db timeout
+</code></pre>
+          </div>
+
+          <h3>Step 2 — Explore logs in Grafana</h3>
+          <ol>
+            <li>Open <strong>Explore</strong> in Grafana.</li>
+            <li>Select the <strong>Loki</strong> data source.</li>
+            <li>
+              Start with a simple query, for example:
+            </li>
+          </ol>
+
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">LogQL</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#logql-app-all"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="logql-app-all"><code class="language-logql">{app="web-analytics"}</code></pre>
+          </div>
+
+          <p>Run the query and confirm you see log lines.</p>
+
+          <h3>Step 3 — Filter with LogQL</h3>
+          <p>Try a few more focused queries:</p>
+
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">LogQL</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#logql-api"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="logql-api"><code class="language-logql">{app="web-analytics", service="analytics-api"}</code></pre>
+          </div>
+
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">LogQL</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#logql-errors"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="logql-errors"><code class="language-logql">{app="web-analytics", level="error"}</code></pre>
+          </div>
+
+          <div class="code-snippet">
+            <div class="code-snippet-header">
+              <span class="code-snippet-label">LogQL</span>
+              <button
+                class="code-snippet-copy"
+                type="button"
+                data-copy-target="#logql-timeout"
+              >
+                Copy
+              </button>
+            </div>
+            <pre id="logql-timeout"><code class="language-logql">{service="analytics-api", level="error"} |= "timeout"</code></pre>
+          </div>
+
+          <p>
+            Each query helps you narrow down the logs that matter for a specific
+            question, such as “What errors are happening in the
+            <code>analytics-api</code> service right now?”.
+          </p>
+
+          <figure class="module-figure">
+            <img
+              src="images/REPLACE_WITH_YOUR_OWN_LOKI_SCREENSHOT.png"
+              alt="Screenshot of Grafana Explore showing Loki logs for the analytics-api service"
+            />
+            <figcaption>
+              Example: using LogQL in Grafana Explore to filter error logs from
+              the <code>analytics-api</code> service stored in Loki.
+            </figcaption>
+          </figure>
+
+          <div class="todo-user">
+            TODO: replace the image path above with a screenshot from <strong>your own</strong>
+            Loki + Grafana setup, and update the caption text if needed.
+          </div>
+        </section>
+
+        <!-- Section 7 -->
+        <section id="s7" class="module-section">
+          <h2>7. Quiz &amp; learnings</h2>
+          <p>
+            Use these questions to check your understanding. You can answer them
+            in your notes or discuss them with a partner.
+          </p>
+
+          <ol>
+            <li>
+              <strong>Concept:</strong> In your own words, what problem does Loki
+              solve in an observability stack?
+            </li>
+            <li>
+              <strong>Architecture:</strong> How is Loki’s indexing strategy
+              different from log systems that index the entire log message?
+            </li>
+            <li>
+              <strong>Integration:</strong> Why is it helpful that Loki uses labels
+              in a similar way to Prometheus?
+            </li>
+            <li>
+              <strong>Hands-on LogQL:</strong> Write a LogQL query that shows logs
+              where <code>service="frontend"</code> and the log line contains
+              the word <code>signup</code>.
+            </li>
+            <li>
+              <strong>Project-specific:</strong> Give one example of an issue
+              in a web analytics app that would be easier to debug with Loki
+              logs than with metrics alone.
+            </li>
+          </ol>
+
+          <div class="callout callout-note">
+            <p>
+              If you can comfortably answer these questions, you understand
+              Loki well enough to use it as the logging pillar of your
+              observability stack.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 8 -->
+        <section id="s8" class="module-section">
+          <h2>8. Conclusion</h2>
+          <p>
+            In this tutorial you met <strong>Grafana Loki</strong> as the logging
+            component of an observability stack. You saw why it was created,
+            how it compares to other logging tools, and how to run it yourself.
+          </p>
+          <p>
+            The key ideas to remember are:
+          </p>
+          <ul>
+            <li>Loki stores logs and indexes them primarily by <strong>labels</strong>.</li>
+            <li>It integrates tightly with <strong>Grafana</strong> and fits well
+              alongside <strong>Prometheus</strong>.</li>
+            <li>It is especially good when you care about <em>correlating logs
+              with metrics</em> rather than doing extremely heavy full-text
+              log analytics.</li>
+          </ul>
+          <p>
+            From here, you can build dashboards that combine metrics (from
+            Prometheus) and logs (from Loki), and later bring in traces
+            with OpenTelemetry to complete the observability picture.
+          </p>
+
+          <button class="btn primary module-complete-btn" id="mark-complete-btn">
+            Mark this module as complete
+          </button>
+          <p class="complete-status" id="complete-status">
+            Not marked as complete yet.
+          </p>
+        </section>
+
+      </article>
     </div>
   </section>
 </main>
