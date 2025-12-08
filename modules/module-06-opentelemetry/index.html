@@ -29,8 +29,11 @@
         <p class="module-kicker">Tooling · OpenTelemetry</p>
         <h1>OpenTelemetry – Unified Telemetry</h1>
         <p class="module-lead">
-          Learn how OpenTelemetry provides a standard way to generate metrics,
-          logs, and traces across your services and frontends.
+          OpenTelemetry (OTel) is an open-source standard for generating,
+          collecting, and exporting metrics, logs, and traces from your
+          applications and infrastructure. It gives you one consistent way
+          to instrument services and send data to tools like Prometheus,
+          Grafana, Tempo, Loki, and more.
         </p>
         <div class="module-meta-row">
           <span>⏱️ Estimated time: 3 hours</span>
@@ -43,10 +46,11 @@
         <div class="module-summary-card">
           <h2>Module outline</h2>
           <ul>
-            <li>OpenTelemetry concepts & components</li>
-            <li>SDKs, exporters, and the Collector</li>
-            <li>Basic tracing with OTel</li>
-            <li>Bridging OTel with Prometheus and Grafana</li>
+            <li>OpenTelemetry concept & history</li>
+            <li>SDKs, exporters & the Collector</li>
+            <li>How to install & run for a web app</li>
+            <li>Example from our project (with screenshot)</li>
+            <li>Quiz, learnings & conclusion</li>
           </ul>
         </div>
       </div>
@@ -61,39 +65,332 @@
       <aside class="module-sidebar">
         <p class="sidebar-title">OpenTelemetry topics</p>
         <nav class="sidebar-nav">
-          <a href="#s1" class="sidebar-link active">1. OTel overview</a>
-          <a href="#s2" class="sidebar-link">2. SDKs & instrumentation</a>
-          <a href="#s3" class="sidebar-link">3. Exporters & protocols</a>
-          <a href="#s4" class="sidebar-link">4. OTel Collector</a>
-          <a href="#s5" class="sidebar-link">5. Tracing basics</a>
-          <a href="#s6" class="sidebar-link">6. Integrating with Prometheus & Grafana</a>
+          <a href="#s1" class="sidebar-link active">1. Tech overview</a>
+          <a href="#s2" class="sidebar-link">2. Tech history</a>
+          <a href="#s3" class="sidebar-link">3. Architecture & components</a>
+          <a href="#s4" class="sidebar-link">4. How to install & run</a>
+          <a href="#s5" class="sidebar-link">5. What it does in our project</a>
+          <a href="#s6" class="sidebar-link">6. Quiz, learnings & conclusion</a>
         </nav>
       </aside>
 
-      <!-- Content skeleton -->
+      <!-- Content -->
       <article class="module-content">
+        <!-- 1. Tech overview -->
         <section id="s1" class="module-section">
-          <h2>1. OpenTelemetry overview</h2>
+          <h2>1. Tech overview – what is OpenTelemetry?</h2>
+          <p>
+            <strong>Tech name:</strong> OpenTelemetry (OTel)
+          </p>
+          <p>
+            <strong>Tech overview:</strong> OpenTelemetry is an open-source,
+            vendor-neutral observability framework that standardizes how we
+            collect <em>traces</em>, <em>metrics</em>, and <em>logs</em> from
+            applications. Instead of every monitoring tool shipping its own
+            agent and API, OTel gives us a unified set of SDKs, semantic
+            conventions, and protocols to instrument code once and export
+            the data anywhere.
+          </p>
+
+          <div class="term">
+            <h3>Key concepts</h3>
+            <ul>
+              <li><strong>Trace</strong> – the end-to-end path of a request across multiple services.</li>
+              <li><strong>Span</strong> – a single unit of work within a trace (a function call, DB query, HTTP request, etc.).</li>
+              <li><strong>Metric</strong> – numeric measurements over time (e.g., request latency, error rate).</li>
+              <li><strong>Log</strong> – timestamped events describing what happened inside the system.</li>
+            </ul>
+          </div>
+
+          <div class="callout callout-opinion">
+            <strong>Our view (high-level):</strong> OpenTelemetry is less of a “tool”
+            and more of a <em>standard language for telemetry</em>. Once you buy into
+            OTel, moving between backends (Grafana, Datadog, New Relic, etc.) becomes
+            dramatically easier, and you avoid lock-in to any one vendor’s agent.
+          </div>
         </section>
 
+        <!-- 2. Tech history -->
         <section id="s2" class="module-section">
-          <h2>2. SDKs & instrumentation</h2>
+          <h2>2. Tech history – where did OpenTelemetry come from?</h2>
+          <p>
+            Before OpenTelemetry, there were several competing projects trying to
+            standardize tracing:
+          </p>
+          <ul>
+            <li><strong>OpenTracing</strong> – a vendor-neutral API for distributed tracing.</li>
+            <li><strong>OpenCensus</strong> – a library from Google focusing on metrics & tracing.</li>
+          </ul>
+          <p>
+            These efforts fragmented the ecosystem. Some libraries supported
+            OpenTracing, others OpenCensus, and many teams were forced to choose.
+            To fix this, the communities merged and created <strong>OpenTelemetry</strong>,
+            now a <strong>CNCF</strong> (Cloud Native Computing Foundation) project.
+          </p>
+
+          <ul>
+            <li><strong>2019</strong>: OpenTelemetry project announced (merger of OpenTracing + OpenCensus).</li>
+            <li><strong>2021+</strong>: Stable tracing specification and SDKs in major languages.</li>
+            <li><strong>Today</strong>: De-facto standard for cloud-native observability; adopted by all major APM vendors.</li>
+          </ul>
+
+          <div class="callout callout-note">
+            <strong>Why this history matters:</strong> OTel is not “just another agent.”
+            It is the community’s attempt to have <em>one</em> open standard for telemetry,
+            rather than 10 competing ones.
+          </div>
         </section>
 
+        <!-- 3. Architecture & components -->
         <section id="s3" class="module-section">
-          <h2>3. Exporters & protocols</h2>
+          <h2>3. Architecture & components</h2>
+          <p>
+            OpenTelemetry is made up of several building blocks that work together:
+          </p>
+
+          <div class="term">
+            <h3>SDKs & instrumentation</h3>
+            <p>
+              OTel SDKs live inside your application code. They expose APIs for traces,
+              metrics, and logs. Instrumentation can be:
+            </p>
+            <ul>
+              <li><strong>Automatic</strong> – attach an OTel “auto-instrumentation” agent, and it wraps common libraries (HTTP, DB, frameworks).</li>
+              <li><strong>Manual</strong> – you call the OTel API directly in critical parts of your code (e.g., around business logic).</li>
+            </ul>
+          </div>
+
+          <div class="term">
+            <h3>Exporters & protocols</h3>
+            <p>
+              Exporters are responsible for sending telemetry data out of your app.
+              The most common protocol is <strong>OTLP</strong> (OpenTelemetry Protocol),
+              which can be carried over HTTP or gRPC.
+            </p>
+            <ul>
+              <li>OTLP → OpenTelemetry Collector</li>
+              <li>Prometheus exporter → Prometheus scrape endpoint</li>
+              <li>Jaeger/Zipkin exporter → legacy tracing backends</li>
+            </ul>
+          </div>
+
+          <div class="term">
+            <h3>OpenTelemetry Collector</h3>
+            <p>
+              The Collector is a standalone service that receives telemetry,
+              processes it (batching, sampling, enrichment), and then sends it to
+              one or more backends like Grafana Tempo, Loki, Prometheus, or vendor APMs.
+            </p>
+          </div>
+
+          <div class="callout callout-example">
+            <strong>In our project:</strong> our services send traces/metrics via OTLP
+            → an OpenTelemetry Collector instance → which then exports to the Grafana
+            stack for visualization alongside the Grafana-only metrics that our teammates set up.
+          </div>
+
+          <div class="callout callout-opinion">
+            <strong>Our view (OTel vs competition):</strong><br />
+            Traditional APM tools ship closed-source agents tightly coupled to their
+            platform. OpenTelemetry flips this model: the instrumentation is open and
+            standardized, while the choice of backend is flexible. For teams that care
+            about <em>portability</em> and <em>multi-cloud</em>, OTel is a much safer bet.
+          </div>
         </section>
 
+        <!-- 4. How to install & run -->
         <section id="s4" class="module-section">
-          <h2>4. OTel Collector</h2>
+          <h2>4. How to install & run OpenTelemetry (for a web app)</h2>
+          <p>
+            Exact commands will depend on your stack, but a typical setup for a
+            Node.js web service looks like this:
+          </p>
+
+          <h3>4.1 Instrument the application</h3>
+          <ol>
+            <li>
+              Install OTel packages (example for Node.js):
+              <pre><code>npm install @opentelemetry/api \
+  @opentelemetry/sdk-trace-node \
+  @opentelemetry/sdk-metrics \
+  @opentelemetry/auto-instrumentations-node \
+  @opentelemetry/exporter-trace-otlp-grpc</code></pre>
+            </li>
+            <li>
+              Create a small <code>tracing.js</code> bootstrap file that sets up
+              the SDK, auto-instrumentations, and an OTLP exporter pointing to
+              your OTel Collector.
+            </li>
+            <li>
+              Start your app with tracing enabled, e.g.
+              <pre><code>node -r ./tracing.js server.js</code></pre>
+            </li>
+          </ol>
+
+          <h3>4.2 Run the OpenTelemetry Collector</h3>
+          <ol>
+            <li>
+              Create a <code>collector-config.yaml</code> with:
+              <ul>
+                <li><strong>Receivers</strong>: OTLP (from your app).</li>
+                <li><strong>Processors</strong>: batch, attributes, sampling (optional).</li>
+                <li><strong>Exporters</strong>: Tempo, Loki, Prometheus, or other backends.</li>
+              </ul>
+            </li>
+            <li>
+              Start the Collector (example using Docker):
+              <pre><code>docker run --rm -it \
+  -v "$(pwd)/collector-config.yaml":/etc/otelcol/config.yaml \
+  -p 4317:4317 -p 4318:4318 \
+  otel/opentelemetry-collector:latest</code></pre>
+            </li>
+          </ol>
+
+          <h3>4.3 Connect to Grafana</h3>
+          <ul class="checklist">
+            <li>Configure Grafana data sources to point at your Tempo/Prometheus/Loki endpoints.</li>
+            <li>Use “Explore”/“Traces” in Grafana to search for spans coming from your service.</li>
+            <li>Build a dashboard combining metrics (Prometheus) and traces (Tempo) to show E2E behavior.</li>
+          </ul>
+
+          <div class="callout callout-exercise">
+            <strong>Exercise:</strong> Reproduce these steps using your own service name
+            and ports. Verify that at least one request through your app shows up as a
+            trace in Grafana.
+          </div>
         </section>
 
+        <!-- 5. What it does in our project -->
         <section id="s5" class="module-section">
-          <h2>5. Tracing basics</h2>
+          <h2>5. What OpenTelemetry does in our project</h2>
+          <p>
+            In our web observability project, OpenTelemetry is the “data
+            generator” and “data router” for observability. Every incoming HTTP
+            request to our demo app is turned into a <strong>trace</strong> with
+            multiple <strong>spans</strong>:
+          </p>
+          <ul>
+            <li>One span for the incoming HTTP request.</li>
+            <li>Spans for internal function calls and database queries.</li>
+            <li>Optional spans for external API calls.</li>
+          </ul>
+          <p>
+            These spans are exported through OTLP to the OTel Collector and then
+            forwarded to Grafana’s tracing backend. From Grafana, we can:
+          </p>
+          <ul>
+            <li>See how long each request took end-to-end.</li>
+            <li>Identify which span contributes most to latency.</li>
+            <li>Correlate slow traces with high-level metrics like error rate.</li>
+          </ul>
+
+          <figure class="module-figure">
+            <!-- TODO: Replace this src with a real screenshot from YOUR project -->
+            <img
+              src="../../assets/img/opentelemetry-trace-example.png"
+              alt="Example OpenTelemetry trace from our project dashboard"
+            />
+            <figcaption>
+              Example trace from our project: each bar is a span (HTTP request,
+              handler, DB call). This makes it easy to see where time is spent.
+            </figcaption>
+          </figure>
+
+          <div class="callout callout-note">
+            <strong>Where we see value:</strong> Without OpenTelemetry, Grafana would
+            mostly show us metrics. With OTel traces, we can drill from “this endpoint
+            is slow” down to “this specific DB query is the bottleneck,” which is
+            exactly the kind of observability modern systems need.
+          </div>
         </section>
 
+        <!-- 6. Quiz, learnings & conclusion -->
         <section id="s6" class="module-section">
-          <h2>6. Integrating with Prometheus & Grafana</h2>
+          <h2>6. Quiz, learnings & conclusion</h2>
+
+          <h3>6.1 Quick quiz</h3>
+          <p>Test yourself on the main ideas:</p>
+          <ul class="quiz-list">
+            <li>
+              <details>
+                <summary>Q1. What problem does OpenTelemetry primarily solve?</summary>
+                <p>
+                  It standardizes how applications generate and export telemetry
+                  (traces, metrics, logs) so you don’t have to rely on
+                  vendor-specific agents and APIs.
+                </p>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Q2. What is the role of the OpenTelemetry Collector?</summary>
+                <p>
+                  It receives telemetry from many services, optionally processes it
+                  (batch, sample, enrich), and exports it to one or more backends
+                  like Grafana Tempo, Loki, Prometheus, or vendor APMs.
+                </p>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Q3. Why is OpenTelemetry good for avoiding vendor lock-in?</summary>
+                <p>
+                  Because instrumentation and protocol are open and standardized.
+                  You can keep your OTel code and simply swap or add different
+                  backends without rewriting instrumentation.
+                </p>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>Q4. In our project, what specific benefit did OTel give us over just Grafana alone?</summary>
+                <p>
+                  Grafana + Prometheus gave us metrics, but OTel traces gave us
+                  request-level visibility (spans) so we could see <em>where</em>
+                  latency and errors come from inside the request path.
+                </p>
+              </details>
+            </li>
+          </ul>
+
+          <h3>6.2 Key learnings</h3>
+          <ul>
+            <li>OpenTelemetry is the community standard for traces, metrics, and logs.</li>
+            <li>It grew out of the merger of OpenTracing and OpenCensus to avoid fragmentation.</li>
+            <li>SDKs and auto-instrumentation make it realistic to add tracing to real apps.</li>
+            <li>The Collector decouples your apps from your observability backends.</li>
+            <li>In our project, OTel traces were critical to tying together the Grafana dashboards with actual request flows.</li>
+          </ul>
+
+          <div class="callout callout-opinion">
+            <h3>6.3 Our opinion & conclusion</h3>
+            <p>
+              We see OpenTelemetry as the <strong>foundational layer</strong> of modern
+              observability. Compared to proprietary APM agents, OTel gives us:
+            </p>
+            <ul>
+              <li>Open standards instead of one-vendor APIs.</li>
+              <li>Flexibility to start with open-source backends (Grafana, Prometheus, Tempo) and later plug into paid APMs if needed.</li>
+              <li>A single mental model for telemetry across languages and platforms.</li>
+            </ul>
+            <p>
+              The trade-offs: setup can feel more “DIY” at first (you must configure
+              exporters, Collector, and backends), and there is a learning curve.
+              But once the pipeline is in place, we get long-term leverage: we can
+              evolve our monitoring stack without ripping out instrumentation.
+            </p>
+            <p>
+              <strong>Final verdict:</strong> For a web observability stack in 2025,
+              adopting OpenTelemetry is not just “nice to have” – it’s the most
+              future-proof way to capture telemetry that will continue to work
+              regardless of which dashboards or vendors we choose next.
+            </p>
+          </div>
+
+          <div class="module-complete-btn">
+            <button id="mark-complete-btn">Mark this module as complete</button>
+            <p id="complete-status" class="complete-status"></p>
+          </div>
         </section>
       </article>
 
