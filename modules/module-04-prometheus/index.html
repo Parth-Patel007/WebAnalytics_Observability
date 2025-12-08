@@ -22,79 +22,228 @@
 </header>
 
 <main>
-  <!-- Hero -->
   <section class="module-hero">
     <div class="container module-hero-inner">
       <div class="module-hero-main">
-        <p class="module-kicker">Tooling · Prometheus</p>
+        <p class="module-kicker">Tooling · Module 04</p>
         <h1>Prometheus – Metrics & Monitoring</h1>
         <p class="module-lead">
-          Learn how to collect, store, and query time-series metrics with Prometheus,
-          the core metrics engine in this course.
+          Master the core engine of cloud-native monitoring: learn how to collect, store, and query time-series metrics with Prometheus.
         </p>
         <div class="module-meta-row">
           <span>⏱️ Estimated time: 3 hours</span>
-          <span>🧩 Technology module</span>
+          <span>🧩 Core Technology Module</span>
         </div>
       </div>
 
       <div class="module-hero-side">
         <a class="back-link" href="../../index.html#modules">← Back to curriculum</a>
         <div class="module-summary-card">
-          <h2>Module outline</h2>
+          <h2>Module Outline</h2>
           <ul>
             <li>Prometheus concepts & architecture</li>
-            <li>Installing and running Prometheus</li>
-            <li>Metrics, labels, types, and exporters</li>
-            <li>PromQL basics and practical queries</li>
+            <li>Easy installation using Docker</li>
+            <li>Understanding the power of PromQL</li>
+            <li>Why Prometheus beats the competition</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Layout -->
   <section class="module-body">
     <div class="container module-layout">
 
-      <!-- Sidebar nav -->
       <aside class="module-sidebar">
-        <p class="sidebar-title">Prometheus topics</p>
+        <p class="sidebar-title">Prometheus Topics</p>
         <nav class="sidebar-nav">
-          <a href="#s1" class="sidebar-link active">1. Prometheus overview</a>
-          <a href="#s2" class="sidebar-link">2. Architecture & components</a>
-          <a href="#s3" class="sidebar-link">3. Metrics & labels</a>
-          <a href="#s4" class="sidebar-link">4. PromQL basics</a>
-          <a href="#s5" class="sidebar-link">5. Scrape configs & exporters</a>
-          <a href="#s6" class="sidebar-link">6. Dashboards & next steps</a>
+          <a href="#s1" class="sidebar-link active">1. Overview & History </a>
+          <a href="#s2" class="sidebar-link">2. Installation & Core Concepts</a>
+          <a href="#s3" class="sidebar-link">3. Our Views: Why Prometheus Wins 💡</a>
+          <a href="#s4" class="sidebar-link">4. Practical Application (PromQL)</a>
+          <a href="#s5" class="sidebar-link">5. Quiz & Key Learnings</a>
+          <a href="#s6" class="sidebar-link">6. Conclusion</a>
         </nav>
       </aside>
 
-      <!-- Content skeleton (intentionally empty except headings) -->
       <article class="module-content">
+        
         <section id="s1" class="module-section">
-          <h2>1. Prometheus overview</h2>
+          <h2>1. Prometheus Overview & History</h2>
+
+          <h3 class="tech-name-heading">Prometheus 🔱</h3>
+          
+          <h3 class="subheading">Overview - What it does</h3>
+          
+          <p>Meet Prometheus, the heart of our monitoring setup. At its core, it's an open-source system monitoring and alerting toolkit designed specifically to handle time-series data. What is time-series data? Simply put, it's a sequence of measurements (metrics) taken at specific points in time—like tracking your CPU usage, checking how long a request takes (latency), or seeing how much memory your server is consuming.</p>
+
+          <p>Prometheus operates on a unique pull model: it actively goes out and scrapes (fetches) these metrics from instrumented targets (like your web application or database) at regular intervals. Best of all, it comes with its own exceptionally powerful query language, PromQL, which we'll use to analyze and visualize all this data.</p>
+          
+          <hr/>
+
+          <h3 class="subheading">History</h3>
+          
+          <p>It's always good to know where a key technology comes from! Prometheus was first conceived and developed at SoundCloud back in 2012. The team needed a monitoring solution that could truly scale with their fast-growing microservices architecture, something their older systems couldn't handle.</p>
+
+          <p>The design was heavily inspired by an internal monitoring system at Google called Borgmon.</p>
+          
+          <ul>
+            <li>2012: Development begins inside SoundCloud.</li>
+            <li>2015: It's released to the world as open-source software, quickly gaining traction.</li>
+            <li>2016: A major milestone! Prometheus became only the second project (right after Kubernetes) to join the Cloud Native Computing Foundation (CNCF). This move cemented its status as the go-to standard for monitoring in modern, cloud-native environments.</li>
+          </ul>
         </section>
+        
+        <hr/>
 
         <section id="s2" class="module-section">
-          <h2>2. Architecture & components</h2>
+          <h2>2. Installation & Core Concepts</h2>
+          
+          <h3 class="subheading">How to Install/Run</h3>
+          
+          <p>The easiest and most reliable way to start working with Prometheus is by using Docker and Docker Compose. This method guarantees a consistent environment for all the exercises in our course.</p>
+
+          <h4>1. Pull the Docker Image:</h4>
+          <p>We'll start with the official, reliable Prometheus image:</p>
+          <pre><code>docker pull prom/prometheus</code></pre>
+
+          <h4>2. Configure and Run (using Docker Compose):</h4>
+          <p>You'll define your services in a <code>docker-compose.yml</code> file. This usually involves mounting a local <code>prometheus.yml</code> configuration file to tell Prometheus what to monitor.</p>
+
+          <p><strong>A crucial piece is the <code>prometheus.yml</code> file, which defines the scraping jobs:</strong></p>
+          <pre><code>scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090'] # Prometheus scrapes itself for internal health metrics
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['node-exporter:9100'] # This scrapes a separate server's OS metrics
+</code></pre>
+
+          <h4>3. Start the stack:</h4>
+          <p>Run this simple command in your terminal to start the server in the background:</p>
+          <pre><code>docker-compose up -d prometheus</code></pre>
+          <p>Once started, the Prometheus server immediately begins the scraping process defined in the configuration.</p>
+
+          <h3 class="subheading">Prometheus Architecture</h3>
+          <p>To understand how this all fits together, here is a diagram of the core Prometheus architecture:</p>
+          <img
+            src="prometheus-architecture.png"
+            alt="Diagram showing the Prometheus server, its pull model scraping various exporters and targets, storing data in the TSDB, and integrating with Alertmanager and Grafana."
+          />
+
         </section>
+
+        <hr/>
 
         <section id="s3" class="module-section">
-          <h2>3. Metrics & labels</h2>
+          <h2 style="color: #FF6F00; font-weight: bold;">3. Our Views on Prometheus  💡</h2>
+          
+          <h3 class="subheading">Prometheus vs. Competition (Why it's useful)</h3>
+          
+          <p>Prometheus has become the clear leader in the cloud-native monitoring space. We believe it stands out significantly when compared to older, agent-based systems like Nagios or many expensive commercial SaaS solutions, primarily because of these core strengths:</p>
+          
+          <ul>
+            <li>Pull Model (Scalability): The pull model is perfect for dynamic cloud environments where services come and go. Prometheus initiates the connection, which is easier to manage than constantly configuring dozens of agents to push data to a central location.</li>
+            <li>Multi-Dimensional Data Model (Labels): This is a game-changer! Metrics aren't just flat numbers; they are augmented with labels. For instance, a metric like <code>http_requests_total</code> can be segmented by labels like <code>method="GET"</code>, <code>path="/api/users"</code>, or <code>status="200"</code>. This makes debugging and analysis incredibly powerful.</li>
+            <li>PromQL's Power: The PromQL query language is purpose-built for time-series data. It goes far beyond simple filtering, allowing for complex aggregations, rate-of-change calculations, and joins across different metric sets. This makes deep analysis simpler and more effective.</li>
+            <li>CNCF Adoption: Its tight, community-driven integration with Kubernetes (K8s) makes it the default, battle-tested choice for any modern, containerized application architecture.</li>
+          </ul>
+
+          <blockquote class="standout-opinion">
+            Our Opinion: While commercial SaaS offerings can be simple to set up, Prometheus offers unparalleled control, superior cost-efficiency, and the flexibility needed for modern, high-volume data collection. Its open standard has fostered a massive ecosystem (Exporters, Grafana integration) that is simply unmatched in the cloud-native domain.
+          </blockquote>
         </section>
+
+        <hr/>
 
         <section id="s4" class="module-section">
-          <h2>4. PromQL basics</h2>
+          <h2>4. Practical Application (PromQL)</h2>
+          
+          <p>Prometheus's fundamental job is to store your metrics efficiently and give you a powerful interface to query that data using PromQL.</p>
+
+          <h3 class="subheading">Core Functionality in a Nutshell:</h3>
+          <ul>
+            <li>Scraping: Periodically fetches metrics from configured targets.</li>
+            <li>Storage: Saves collected data in its internal Time Series Database (TSDB).</li>
+            <li>Querying: Executes PromQL queries via its expression browser or external tools like Grafana.</li>
+          </ul>
+
+          <h3 class="subheading">Example: Analyzing Web Traffic</h3>
+          
+          <p>In our course project, we use Prometheus to monitor the live performance of our web services. Let's look at a critical, real-world query that checks the average rate of successful (HTTP status 200) requests over the last 5 minutes.</p>
+
+          <h4>PromQL Query:</h4>
+          <pre><code>rate(http_requests_total{status="200"}[5m])</code></pre>
+          
+          <p>This query calculates the per-second average of the counter metric <code>http_requests_total</code>, specifically filtering for requests where the <code>status</code> label is exactly <code>"200"</code>, and smoothing the rate calculation over a 5-minute time window.</p>
+
+          <h3 class="subheading">Visualizing the Query</h3>
+          <p>Here’s how that query looks when executed in the Prometheus UI, giving you a graph of success rates over time:</p>
+          <img
+            src="img/promql-rate-query.png"
+            alt="Screenshot of the Prometheus expression browser showing the graph result for the rate(http_requests_total{status='200'}[5m]) PromQL query."
+          />
         </section>
+
+        <hr/>
 
         <section id="s5" class="module-section">
-          <h2>5. Scrape configs & exporters</h2>
+          <h2>5. Quiz/Learnings</h2>
+          
+          <h3 class="subheading">Key Takeaways</h3>
+          <ul>
+            <li>Prometheus uses a pull model to collect data from targets.</li>
+            <li>Metrics are uniquely identified by a metric name and a set of key-value pairs called labels.</li>
+            <li>The powerful query language used to interact with Prometheus data is PromQL.</li>
+            <li>Prometheus stores data efficiently in its internal TSDB (Time Series Database).</li>
+          </ul>
+          
+          <h3 class="subheading">Self-Assessment Quiz 🧠</h3>
+          
+          <ol class="quiz-list">
+            <li>
+              <p><strong>Question 1:</strong> Which term describes Prometheus's method of collecting data from targets?</p>
+              <div class="callout callout-note">
+                <p><strong>Answer:</strong> Pull / Scraping</p>
+              </div>
+            </li>
+            <li>
+              <p><strong>Question 2:</strong> What is the name of the powerful query language used to interact with Prometheus data?</p>
+              <div class="callout callout-note">
+                <p><strong>Answer:</strong> PromQL</p>
+              </div>
+            </li>
+            <li>
+              <p><strong>Question 3:</strong> If you want to segment a metric by the HTTP status code (e.g., 200, 404), what Prometheus concept would you use?</p>
+              <div class="callout callout-note">
+                <p><strong>Answer:</strong> Labels</p>
+              </div>
+            </li>
+          </ol>
         </section>
 
+        <hr/>
+        
         <section id="s6" class="module-section">
-          <h2>6. Dashboards & next steps</h2>
+          <h2>6. Conclusion</h2>
+          
+          <p>Prometheus is much more than just a monitoring utility; it is truly the backbone of modern observability in cloud-native infrastructures. By offering a robust, multi-dimensional data model and a query language specifically crafted for time-series analysis, it empowers engineers to move past simple "is it up?" checks and dive into deep performance debugging and creating sophisticated, actionable alerts.</p>
+
+          <p>Mastering Prometheus is a fundamental and vital step toward building resilient, scalable, and fully observable web analytics pipelines.</p>
+
+          <div class="next-step-callout">
+            <h4>Next Steps:</h4> 
+            <p>You're ready for the final piece of the puzzle! Proceed to the next module to learn about Grafana, the indispensable visualization tool that transforms your raw Prometheus metrics into beautiful, actionable dashboards.</p>
+          </div>
         </section>
+
+        <section id="completion" class="module-section">
+          <h2>Module Completion</h2>
+          <button id="mark-complete-btn" class="module-complete-btn">Mark this module as complete</button>
+          <p id="complete-status" class="complete-status">Not marked as complete yet.</p>
+        </section>
+
       </article>
 
     </div>
