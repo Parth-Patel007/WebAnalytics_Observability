@@ -26,3 +26,9 @@ php -S localhost:8000
 ```
 
 Then open `http://localhost:8000` in your browser.
+
+To run and work with the demo, you can move to the WAO demo project
+
+```bash
+cd WAO demo project
+```
