@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Module 2 – Introduction to Observability</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="module.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="logo">
+          <span class="logo-mark">WAO</span>
+          <span class="logo-text">Web Analytics & Observability</span>
+        </div>
+        <nav class="nav">
+          <a href="../../index.html#overview">Overview</a>
+          <a href="../../index.html#modules">Curriculum</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="module-hero">
+        <div class="container module-hero-inner">
+          <div class="module-hero-main">
+            <p class="module-kicker">Module 2 · Foundations</p>
+            <h1>Introduction to Observability</h1>
+            <p class="module-lead">
+              Learn what observability means, how it differs from monitoring,
+              and the three critical pillars that modern systems rely on:
+              metrics, logs, and traces.
+            </p>
+            <div class="module-meta-row">
+              <span>⏱️ Estimated time: 1 hour</span>
+              <span>🧩 Level: Beginner</span>
+            </div>
+          </div>
+
+          <div class="module-hero-side">
+            <a class="back-link" href="../../index.html#modules"
+              >← Back to curriculum</a
+            >
+            <div class="module-summary-card">
+              <h2>You will learn</h2>
+              <ul>
+                <li>What observability is & why it matters</li>
+                <li>The difference between monitoring and observability</li>
+                <li>The three pillars: Metrics, Logs, Traces</li>
+                <li>How observability helps debug real systems</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main layout -->
+      <section class="module-body">
+        <div class="container module-layout">
+          <!-- Sidebar -->
+          <aside class="module-sidebar">
+            <p class="sidebar-title">On this page</p>
+            <nav class="sidebar-nav">
+              <a href="#s1" class="sidebar-link active"
+                >1. What is observability?</a
+              >
+              <a href="#s2" class="sidebar-link"
+                >2. Observability vs monitoring</a
+              >
+              <a href="#s3" class="sidebar-link">3. The three pillars</a>
+              <a href="#s4" class="sidebar-link"
+                >4. Why observability matters</a
+              >
+              <a href="#s5" class="sidebar-link"
+                >5. Real example: slow checkout</a
+              >
+              <a href="#s6" class="sidebar-link">Check your understanding</a>
+              <a href="#s7" class="sidebar-link">Try it yourself</a>
+            </nav>
+          </aside>
+
+          <!-- Content -->
+          <article class="module-content">
+            <!-- Section 1 -->
+            <section id="s1" class="module-section">
+              <h2>1. What is observability?</h2>
+              <p>
+                <strong>Observability</strong> is the ability to understand what
+                is happening inside a system from the outside. You don't log
+                into a server or step through code — instead, the system
+                produces signals that tell you what's going on.
+              </p>
+
+              <p>A system is observable when you can answer questions like:</p>
+              <ul>
+                <li>Why is the checkout API slow right now?</li>
+                <li>Why are users seeing errors only in Europe?</li>
+                <li>Which microservice is causing the latency spike?</li>
+              </ul>
+
+              <div class="callout callout-note">
+                <p>
+                  Observability isn’t about collecting everything — it’s about
+                  collecting the <strong>right signals</strong> that help answer
+                  the questions you care about.
+                </p>
+              </div>
+            </section>
+
+            <!-- Section 2 -->
+            <section id="s2" class="module-section">
+              <h2>2. Observability vs Monitoring</h2>
+              <div class="term">
+                <h3>Monitoring</h3>
+                <p>Answers: <strong>“Is it working?”</strong></p>
+              </div>
+
+              <div class="term">
+                <h3>Observability</h3>
+                <p>Answers: <strong>“Why isn’t it working?”</strong></p>
+              </div>
+
+              <div class="callout callout-example">
+                <p>
+                  Monitoring might show that the error rate is high.
+                  Observability helps you find which request path, which
+                  service, and even which user scenario is causing it.
+                </p>
+              </div>
+            </section>
+
+            <!-- Section 3 -->
+            <section id="s3" class="module-section">
+              <h2>3. The three pillars of observability</h2>
+
+              <div class="term">
+                <h3>Metrics</h3>
+                <p>
+                  Numeric measurements over time. Example: request rate, error
+                  rate, latency (p95).
+                </p>
+              </div>
+
+              <div class="term">
+                <h3>Logs</h3>
+                <p>
+                  Text records of events inside the system. Example: “Payment
+                  failed: missing token”
+                </p>
+              </div>
+
+              <div class="term">
+                <h3>Traces</h3>
+                <p>
+                  A trace shows how a single request travels through your
+                  system, often across many services.
+                </p>
+              </div>
+
+              <div class="callout callout-note">
+                <p>
+                  Modern observability platforms (like OpenTelemetry) generate
+                  all three pillars using consistent data models.
+                </p>
+              </div>
+            </section>
+
+            <!-- Section 4 -->
+            <section id="s4" class="module-section">
+              <h2>4. Why observability matters</h2>
+              <p>With observability, you can:</p>
+              <ul>
+                <li>Debug production issues faster</li>
+                <li>Find root causes without guesswork</li>
+                <li>Understand how real users experience your system</li>
+                <li>Detect hidden bottlenecks</li>
+              </ul>
+
+              <p>
+                As systems grow (microservices, event-driven systems,
+                serverless), traditional monitoring isn’t enough. Observability
+                becomes essential.
+              </p>
+            </section>
+
+            <!-- Section 5 -->
+            <section id="s5" class="module-section">
+              <h2>5. Real example: “Checkout is slow”</h2>
+              <p>
+                Observability helps debug real failures. Imagine the message:
+                <strong>“Checkout is slow for some users.”</strong>
+              </p>
+
+              <p>With observability, you can see:</p>
+              <ul>
+                <li>Latency metrics → spike at 7:42 PM</li>
+                <li>Logs → timeout from payment provider</li>
+                <li>Traces → bottleneck in the “calculate-discount” service</li>
+              </ul>
+
+              <div class="callout callout-example">
+                <p>
+                  Without observability, teams guess. With observability, teams
+                  measure.
+                </p>
+              </div>
+            </section>
+
+            <!-- Section 6 -->
+            <section id="s6" class="module-section">
+              <h2>Check your understanding</h2>
+              <ul class="checklist">
+                <li>How is observability different from monitoring?</li>
+                <li>Give an example of a metric you might track.</li>
+                <li>Give an example of a log entry.</li>
+                <li>What is a trace and when is it useful?</li>
+                <li>Why do modern systems need observability?</li>
+              </ul>
+            </section>
+
+            <!-- Section 7 -->
+            <section id="s7" class="module-section">
+              <h2>Try it yourself</h2>
+              <div class="callout callout-exercise">
+                <h3>Exercise: Debug a fictional issue</h3>
+                <p>Imagine your login page is sometimes slow. Write down:</p>
+                <ol>
+                  <li>Which metrics you would check first</li>
+                  <li>Which logs might reveal errors</li>
+                  <li>What you'd expect to see in a trace</li>
+                </ol>
+              </div>
+
+              <!-- External Study Links -->
+              <section id="external-links" class="module-section">
+                <h2>Further Reading & Resources</h2>
+                <p>
+                  These resources provide additional explanations, real-world
+                  examples, and deeper insights into observability. They are
+                  optional, but highly recommended if you want to expand your
+                  understanding.
+                </p>
+
+                <ul class="external-links-list">
+                  <li>
+                    <a
+                      href="https://newrelic.com/blog/best-practices/what-is-observability"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      🔗 What Is Observability? — New Relic
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://sre.google/sre-book/monitoring-distributed-systems/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      🔗 Monitoring Distributed Systems — Google SRE Book
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://opentelemetry.io/docs/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      🔗 OpenTelemetry Documentation — Official Site
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://grafana.com/docs/grafana/latest/visualizations/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      🔗 Visualizing Metrics with Grafana — Grafana Docs
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://prometheus.io/docs/introduction/overview/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      🔗 Prometheus Overview — Prometheus Docs
+                    </a>
+                  </li>
+                </ul>
+              </section>
+
+              <button
+                class="btn primary module-complete-btn"
+                id="mark-complete-btn"
+              >
+                Mark this module as complete
+              </button>
+              <p class="complete-status" id="complete-status">
+                Not marked as complete yet.
+              </p>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>Web Analytics & Observability Tutorial</span>
+        <span>Module 2 · Introduction to Observability</span>
+      </div>
+    </footer>
+
+    <script src="module.js"></script>
+  </body>
+</html>

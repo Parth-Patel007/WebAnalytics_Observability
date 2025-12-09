@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Module 1 – Introduction to Web Analytics</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Shared global styles -->
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <!-- Module-specific styles -->
+  <link rel="stylesheet" href="module.css" />
+</head>
+<body>
+  <!-- Same header as landing page -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-mark">WAO</span>
+        <span class="logo-text">Web Analytics & Observability</span>
+      </div>
+      <nav class="nav">
+        <a href="../../index.html#overview">Overview</a>
+        <a href="../../index.html#modules">Curriculum</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Module hero / intro -->
+    <section class="module-hero">
+      <div class="container module-hero-inner">
+        <div class="module-hero-main">
+          <p class="module-kicker">Module 1 · Foundations</p>
+          <h1>Introduction to Web Analytics</h1>
+          <p class="module-lead">
+            In this module you’ll learn what web analytics is, why it matters,
+            and the basic concepts like page views, sessions, and users.
+          </p>
+          <div class="module-meta-row">
+            <span>⏱️ Estimated time: 1 hour</span>
+            <span>🧩 Level: Beginner</span>
+          </div>
+        </div>
+        <div class="module-hero-side">
+          <a class="back-link" href="../../index.html#modules">← Back to curriculum</a>
+          <div class="module-summary-card">
+            <h2>What you'll be able to do</h2>
+            <ul>
+              <li>Explain what web analytics is in plain language</li>
+              <li>Describe the difference between page views, sessions, and users</li>
+              <li>Identify the questions analytics can answer for a web app</li>
+              <li>Read simple analytics charts without getting lost</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main module layout -->
+    <section class="module-body">
+      <div class="container module-layout">
+        <!-- Sidebar with in-page navigation -->
+        <aside class="module-sidebar">
+          <p class="sidebar-title">On this page</p>
+          <nav class="sidebar-nav">
+            <a href="#s1" class="sidebar-link active">1. What is web analytics?</a>
+            <a href="#s2" class="sidebar-link">2. Why analytics matters</a>
+            <a href="#s3" class="sidebar-link">3. Key concepts & terms</a>
+            <a href="#s4" class="sidebar-link">4. Types of questions it answers</a>
+            <a href="#s5" class="sidebar-link">5. Simple workflow</a>
+            <a href="#s6" class="sidebar-link">Check your understanding</a>
+            <a href="#s7" class="sidebar-link">Try it yourself</a>
+          </nav>
+        </aside>
+
+        <!-- Main content -->
+        <article class="module-content">
+          <!-- Section 1 -->
+          <section id="s1" class="module-section">
+            <h2>1. What is web analytics?</h2>
+            <p>
+              <strong>Web analytics</strong> is the practice of collecting and analyzing
+              data about how people use your website or web application. Instead of
+              guessing what users do, we measure it.
+            </p>
+            <p>
+              At a very basic level, web analytics answers questions like:
+            </p>
+            <ul>
+              <li>How many people visited my site today?</li>
+              <li>Which pages did they look at?</li>
+              <li>Where did they come from (search, social, ads, etc.)?</li>
+              <li>Did they do what I wanted them to do (sign up, buy, click)?</li>
+            </ul>
+
+            <div class="callout callout-note">
+              <p>
+                <strong>Key idea:</strong> analytics is about turning raw activity
+                on your site into information you can act on.
+              </p>
+            </div>
+          </section>
+
+          <!-- Section 2 -->
+          <section id="s2" class="module-section">
+            <h2>2. Why web analytics matters</h2>
+            <p>
+              Web analytics is important because it connects your product to real
+              user behavior. Instead of launching features and hoping they work,
+              you can see what actually happens.
+            </p>
+            <p>Common reasons teams care about analytics:</p>
+            <ul>
+              <li><strong>Product decisions:</strong> Which features are used most?</li>
+              <li><strong>Growth & marketing:</strong> Which channels bring engaged users?</li>
+              <li><strong>Conversion:</strong> Why do some users drop off before completing a goal?</li>
+              <li><strong>Performance:</strong> Does a slow page hurt engagement?</li>
+            </ul>
+
+            <div class="callout callout-example">
+              <p>
+                Imagine you change your pricing page. With analytics, you can see
+                whether conversions went up, down, or stayed the same after the change.
+              </p>
+            </div>
+          </section>
+
+          <!-- Section 3 -->
+          <section id="s3" class="module-section">
+            <h2>3. Key concepts & terms</h2>
+
+            <div class="term">
+              <h3>Page view</h3>
+              <p>
+                A <strong>page view</strong> is counted every time a page is loaded or
+                reloaded in the browser. If a user refreshes the page three times, that’s
+                three page views.
+              </p>
+            </div>
+
+            <div class="term">
+              <h3>User</h3>
+              <p>
+                A <strong>user</strong> is usually a unique person visiting your site.
+                In practice, tools often use a browser cookie or similar identifier to
+                represent a user.
+              </p>
+            </div>
+
+            <div class="term">
+              <h3>Session</h3>
+              <p>
+                A <strong>session</strong> is a group of user interactions within a
+                given time frame, often around 30 minutes of activity. One user can
+                have multiple sessions.
+              </p>
+            </div>
+
+            <div class="term">
+              <h3>Event</h3>
+              <p>
+                An <strong>event</strong> is a specific action a user takes, like
+                clicking a button, submitting a form, or playing a video.
+              </p>
+            </div>
+
+            <div class="term">
+              <h3>Conversion</h3>
+              <p>
+                A <strong>conversion</strong> is when a user completes a key goal,
+                such as signing up, purchasing, or downloading something.
+              </p>
+            </div>
+
+            <div class="callout callout-note">
+              <p>
+                You don’t need to memorize all definitions now. As we move through the
+                course, we’ll re-use these ideas in concrete examples.
+              </p>
+            </div>
+          </section>
+
+          <!-- Section 4 -->
+          <section id="s4" class="module-section">
+            <h2>4. Types of questions analytics can answer</h2>
+            <p>
+              Good analytics setups are built around questions, not just metrics.
+              Here are some common question types:
+            </p>
+
+            <ul>
+              <li>
+                <strong>How many?</strong>  
+                How many users visited yesterday? How many sign-ups did we get?
+              </li>
+              <li>
+                <strong>Where from?</strong>  
+                Did they come from organic search, social media, or paid ads?
+              </li>
+              <li>
+                <strong>What did they do?</strong>  
+                Which pages do they view? Which buttons do they click?
+              </li>
+              <li>
+                <strong>Did it work?</strong>  
+                After changing a feature, did conversions or engagement improve?
+              </li>
+            </ul>
+
+            <p>
+              Later in the course, we’ll connect these questions to metrics in
+              Prometheus and charts in Grafana.
+            </p>
+          </section>
+
+          <!-- Section 5 -->
+          <section id="s5" class="module-section">
+            <h2>5. A simple web analytics workflow</h2>
+            <ol>
+              <li><strong>Decide what you care about.</strong> (e.g., sign-ups per day)</li>
+              <li><strong>Instrument your site.</strong> Add code to send events or metrics.</li>
+              <li><strong>Collect the data.</strong> Store it in an analytics or metrics system.</li>
+              <li><strong>Visualize it.</strong> Use charts/dashboards to see trends.</li>
+              <li><strong>Act.</strong> Make changes based on what you learn, then measure again.</li>
+            </ol>
+
+            <div class="callout callout-note">
+              <p>
+                This course focuses on the <strong>instrument → collect → visualize</strong>
+                parts, using Prometheus, Grafana, and OpenTelemetry.
+              </p>
+            </div>
+          </section>
+
+          <!-- Section 6: Check your understanding -->
+          <section id="s6" class="module-section">
+            <h2>Check your understanding</h2>
+            <p>
+              Answer these questions for yourself:
+            </p>
+            <ul class="checklist">
+              <li>In your own words, what is web analytics?</li>
+              <li>What is the difference between a user and a session?</li>
+              <li>Give an example of an “event” on a simple website.</li>
+              <li>Why might a product team care about conversions?</li>
+              <li>What are two questions <em>you</em> might want analytics to answer for your own project?</li>
+            </ul>
+          </section>
+
+          <!-- Section 7: Try it yourself -->
+          <section id="s7" class="module-section">
+            <h2>Try it yourself</h2>
+            <div class="callout callout-exercise">
+              <h3>Exercise: Describe analytics for a simple site</h3>
+              <ol>
+                <li>
+                  Imagine a very simple website: a landing page with a “Sign up” button.
+                </li>
+                <li>
+                  On paper or in a note, write down:
+                  <ul>
+                    <li>What would you treat as a page view?</li>
+                    <li>What would count as a conversion?</li>
+                    <li>What events might you track besides the main button?</li>
+                  </ul>
+                </li>
+                <li>
+                  List 3 questions you’d want analytics to answer about this page.
+                </li>
+              </ol>
+              <p>
+                Keep this note handy — in later modules we’ll implement a basic
+                analytics tracker that could power this kind of site.
+              </p>
+            </div>
+
+            <button class="btn primary module-complete-btn" id="mark-complete-btn">
+              Mark this module as complete
+            </button>
+            <p class="complete-status" id="complete-status">
+              Not marked as complete yet.
+            </p>
+          </section>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Web Analytics & Observability Tutorial</span>
+      <span>Module 1 · Introduction to Web Analytics</span>
+    </div>
+  </footer>
+
+  <!-- Module-specific JS -->
+  <script src="module.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Web Analytics & Observability Tutorial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-mark">WAO</span>
+        <span class="logo-text">Web Analytics & Observability</span>
+      </div>
+      <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#modules">Curriculum</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>Learn Web Analytics & Observability from Scratch</h1>
+          <p>
+            A 20-hour, hands-on journey covering Prometheus, Grafana, OpenTelemetry,
+            and real-world web monitoring — using just HTML, CSS, and JavaScript.
+          </p>
+          <div class="hero-actions">
+            <button id="btn-start" class="btn primary">Start Learning</button>
+            <button id="btn-continue" class="btn secondary">
+              Continue where I left off
+            </button>
+          </div>
+          <div class="hero-meta">
+            <span>⏱️ 20 hours total</span>
+            <span>🧩 5 parts</span>
+            <span>📊 Project-based</span>
+          </div>
+        </div>
+        <div class="hero-card" id="quick-progress">
+          <h2>Your Progress</h2>
+          <p class="progress-label">
+            Modules completed: <span id="progress-count">0</span> / <span id="progress-total">0</span>
+          </p>
+          <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+          </div>
+          <p class="progress-note" id="progress-note">
+            You haven't started yet. Begin with Module 1: Introduction to Web Analytics.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Course Overview -->
+    <section id="overview" class="section">
+      <div class="container">
+        <h2>What you will learn</h2>
+        <div class="grid-3">
+          <div class="card">
+            <h3>Foundations</h3>
+            <p>
+              Understand web analytics, observability, telemetry, and how modern web
+              applications are monitored in production.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Tools</h3>
+            <p>
+              Get hands-on with Prometheus, Grafana, and OpenTelemetry — without
+              any heavy frameworks.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Project</h3>
+            <p>
+              Build a mini observability platform that monitors a real HTML/CSS/JS
+              website end-to-end.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curriculum / Modules -->
+    <section id="modules" class="section section-alt">
+      <div class="container modules-layout">
+        <div class="modules-list">
+          <h2>Curriculum</h2>
+          <p class="section-subtitle">
+            Start from the basics and move through each module step by step.
+          </p>
+          <div id="module-list">
+            <!-- Filled by JavaScript from main.js -->
+          </div>
+        </div>
+
+        <div class="module-detail">
+          <h2 id="module-title">Select a module</h2>
+          <p id="module-duration" class="module-duration"></p>
+          <p id="module-description" class="module-description">
+            Click on any module on the left to see what it covers and how long it takes.
+          </p>
+          <div id="module-tags" class="module-tags"></div>
+          <button id="btn-open-module" class="btn primary" disabled>
+            Open Module
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Web Analytics & Observability Tutorial</span>
+      <span>Built with HTML, CSS, and JavaScript</span>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

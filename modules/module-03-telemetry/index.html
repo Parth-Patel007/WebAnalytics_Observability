@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Module 3 – Telemetry in Web Applications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Shared global styles -->
+  <link rel="stylesheet" href="../../assets/css/main.css" />
+  <!-- Module-specific styles (same as Module 1, just copied) -->
+  <link rel="stylesheet" href="module.css" />
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-mark">WAO</span>
+      <span class="logo-text">Web Analytics & Observability</span>
+    </div>
+    <nav class="nav">
+      <a href="../../index.html#overview">Overview</a>
+      <a href="../../index.html#modules">Curriculum</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- Hero -->
+  <section class="module-hero">
+    <div class="container module-hero-inner">
+      <div class="module-hero-main">
+        <p class="module-kicker">Module 3 · Foundations</p>
+        <h1>Telemetry in Web Applications</h1>
+        <p class="module-lead">
+          Learn how web applications generate telemetry data — from the browser
+          and the backend — and how that data flows into your observability stack.
+        </p>
+        <div class="module-meta-row">
+          <span>⏱️ Estimated time: 1 hour</span>
+          <span>🧩 Level: Beginner</span>
+        </div>
+      </div>
+
+      <div class="module-hero-side">
+        <a class="back-link" href="../../index.html#modules">← Back to curriculum</a>
+        <div class="module-summary-card">
+          <h2>You will learn</h2>
+          <ul>
+            <li>What telemetry means in the context of web apps</li>
+            <li>The difference between client-side and server-side telemetry</li>
+            <li>How events, metrics, and traces are generated from user actions</li>
+            <li>What Real User Monitoring (RUM) is and how it fits in</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <section class="module-body">
+    <div class="container module-layout">
+
+      <!-- Sidebar -->
+      <aside class="module-sidebar">
+        <p class="sidebar-title">On this page</p>
+        <nav class="sidebar-nav">
+          <a href="#s1" class="sidebar-link active">1. What is telemetry?</a>
+          <a href="#s2" class="sidebar-link">2. Client vs server telemetry</a>
+          <a href="#s3" class="sidebar-link">3. Events, metrics & traces in web apps</a>
+          <a href="#s4" class="sidebar-link">4. Real User Monitoring (RUM)</a>
+          <a href="#s5" class="sidebar-link">5. Telemetry flow: browser → backend → collector</a>
+          <a href="#s6" class="sidebar-link">6. What to measure (and what not to)</a>
+          <a href="#s7" class="sidebar-link">Check your understanding</a>
+          <a href="#s8" class="sidebar-link">Try it yourself</a>
+        </nav>
+      </aside>
+
+      <!-- Content -->
+      <article class="module-content">
+
+        <!-- Section 1 -->
+        <section id="s1" class="module-section">
+          <h2>1. What is telemetry in web applications?</h2>
+          <p>
+            In a web application, <strong>telemetry</strong> is the automatic
+            collection of data about how the app behaves and how users interact
+            with it. Instead of manually checking logs or databases, telemetry
+            sends structured signals to your observability tools.
+          </p>
+
+          <p>Examples of telemetry from a web app:</p>
+          <ul>
+            <li>“User clicked the <em>Sign up</em> button” (event)</li>
+            <li>“API response time is 320 ms” (metric)</li>
+            <li>“This checkout request went through 4 services” (trace)</li>
+          </ul>
+
+          <figure class="module-figure">
+            <img
+              src="img/web-telemetry-overview.png"
+              alt="Overview diagram of telemetry in a web application"
+            />
+            <figcaption>
+              Telemetry turns user actions and system behavior into signals you can analyze.
+            </figcaption>
+          </figure>
+
+          <div class="callout callout-note">
+            <p>
+              Telemetry is the <strong>raw material</strong> that observability
+              tools like Prometheus, Grafana, and OpenTelemetry work with.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="s2" class="module-section">
+          <h2>2. Client-side vs server-side telemetry</h2>
+          <p>
+            Web apps typically produce telemetry in two places:
+          </p>
+
+          <div class="term">
+            <h3>Client-side telemetry</h3>
+            <p>
+              Collected in the <strong>browser</strong>. Measures how the page
+              loads and how the user interacts with the UI.
+            </p>
+            <ul>
+              <li>Page load time in the user’s browser</li>
+              <li>Clicks, scroll depth, navigation</li>
+              <li>JavaScript errors</li>
+            </ul>
+          </div>
+
+          <div class="term">
+            <h3>Server-side telemetry</h3>
+            <p>
+              Collected in your <strong>backend services</strong>. Measures how
+              your APIs and services behave.
+            </p>
+            <ul>
+              <li>Request rate and error rate</li>
+              <li>Latency of API calls</li>
+              <li>Database query time</li>
+            </ul>
+          </div>
+
+          <figure class="module-figure">
+            <img
+              src="img/client-vs-server-telemetry.png"
+              alt="Comparison diagram of client-side versus server-side telemetry"
+            />
+            <figcaption>
+              Client-side telemetry sees what the user sees; server-side telemetry
+              sees what your services do.
+            </figcaption>
+          </figure>
+
+          <div class="callout callout-example">
+            <p>
+              A page might load fast on the server but slow in the browser because
+              of large images or blocking JavaScript. Client-side telemetry reveals
+              that; server-side alone does not.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="s3" class="module-section">
+          <h2>3. Events, metrics & traces in web apps</h2>
+          <p>
+            In Module 2 we saw the three pillars of observability. Here’s how
+            they show up specifically in web apps:
+          </p>
+
+          <div class="term">
+            <h3>Events</h3>
+            <p>
+              Discrete user actions like clicking buttons, submitting forms, or
+              viewing specific pages.  
+              Example: <em>“User clicked ‘Add to cart’ with product_id=123.”</em>
+            </p>
+          </div>
+
+          <div class="term">
+            <h3>Metrics</h3>
+            <p>
+              Aggregated numbers over time.  
+              Example: <em>“Sign ups per minute”</em> or <em>“p95 page load time”</em>.
+            </p>
+          </div>
+
+          <div class="term">
+            <h3>Traces</h3>
+            <p>
+              Show how a single request flows through your system, often starting
+              in the browser and continuing through multiple services.
+            </p>
+          </div>
+
+          <p>
+            In practice, your app will often:
+          </p>
+          <ul>
+            <li>Track <strong>events</strong> for user behavior</li>
+            <li>Send <strong>metrics</strong> to Prometheus/Grafana</li>
+            <li>Generate <strong>traces</strong> via OpenTelemetry</li>
+          </ul>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="s4" class="module-section">
+          <h2>4. Real User Monitoring (RUM)</h2>
+          <p>
+            <strong>Real User Monitoring (RUM)</strong> collects performance and
+            behavior data from real users in real browsers.
+          </p>
+          <p>RUM can tell you things like:</p>
+          <ul>
+            <li>How long your app takes to load on users’ devices</li>
+            <li>Which browsers or regions see more errors</li>
+            <li>How front-end performance changes after a deployment</li>
+          </ul>
+
+          <figure class="module-figure">
+            <img
+              src="img/rum-vs-synthetic.png"
+              alt="Diagram comparing Real User Monitoring and synthetic monitoring"
+            />
+            <figcaption>
+              RUM captures real user experiences; synthetic monitoring uses robots
+              to run scripted checks.
+            </figcaption>
+          </figure>
+
+          <div class="callout callout-note">
+            <p>
+              RUM complements server-side telemetry. Together, they show both
+              what the user experiences and how the system behaves internally.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="s5" class="module-section">
+          <h2>5. Telemetry flow: browser → backend → collector</h2>
+          <p>
+            At a high level, telemetry from a web app often flows like this:
+          </p>
+          <ol>
+            <li>
+              The browser (client) sends events/metrics/traces to your backend or
+              directly to a collector endpoint.
+            </li>
+            <li>
+              The backend or collector normalizes and enriches the data.
+            </li>
+            <li>
+              The observability stack stores and visualizes it (Prometheus, Grafana,
+              trace UIs, etc.).
+            </li>
+          </ol>
+
+          <figure class="module-figure">
+            <img
+              src="img/telemetry-lifecycle.png"
+              alt="Flow diagram of telemetry lifecycle from browser to backend to observability tools"
+            />
+            <figcaption>
+              Browser and backend both emit telemetry that is collected and sent
+              to your observability tools.
+            </figcaption>
+          </figure>
+
+          <div class="callout callout-note">
+            <p>
+              In later modules, we will build a simple version of this pipeline:
+              browser → backend → Prometheus → Grafana.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 6 -->
+        <section id="s6" class="module-section">
+          <h2>6. What to measure (and what not to)</h2>
+          <p>
+            Good telemetry is intentional. More data is not always better.
+          </p>
+
+          <p>Things you usually <strong>do</strong> want to measure:</p>
+          <ul>
+            <li>Page load and interaction performance</li>
+            <li>Key user actions aligned with your goals (sign up, checkout, etc.)</li>
+            <li>Errors and failed requests</li>
+          </ul>
+
+          <p>Things to be careful about:</p>
+          <ul>
+            <li>Avoid sending sensitive personal data in telemetry</li>
+            <li>Don’t log entire request bodies unnecessarily</li>
+            <li>Be mindful of volume and cost (too many events can get expensive)</li>
+          </ul>
+
+          <div class="callout callout-example">
+            <p>
+              Instead of logging full credit-card numbers, log a masked version or
+              just an ID that can’t identify the card on its own.
+            </p>
+          </div>
+        </section>
+
+        <!-- Section 7: Check your understanding -->
+        <section id="s7" class="module-section">
+          <h2>Check your understanding</h2>
+          <ul class="checklist">
+            <li>In your own words, what is telemetry in a web app?</li>
+            <li>What is the difference between client-side and server-side telemetry?</li>
+            <li>Give an example of an event, a metric, and a trace for the same user action.</li>
+            <li>What kinds of questions does RUM help answer?</li>
+            <li>Why is it important to be selective about what you measure?</li>
+          </ul>
+        </section>
+
+        <!-- Section 8: Try it yourself -->
+        <section id="s8" class="module-section">
+          <h2>Try it yourself</h2>
+          <div class="callout callout-exercise">
+            <h3>Exercise: Telemetry plan for a simple feature</h3>
+            <p>
+              Imagine you’re building a “Contact Us” form on a website. Write down:
+            </p>
+            <ol>
+              <li>
+                Three <strong>client-side events</strong> you would track (e.g. form viewed, form submitted).
+              </li>
+              <li>
+                Two <strong>metrics</strong> you would compute on the backend (e.g. submissions per minute, error rate).
+              </li>
+              <li>
+                What a <strong>trace</strong> for a single submission might look like
+                (which services it passes through).
+              </li>
+            </ol>
+            <p>
+              Keep this plan — later, when we instrument a real example, you can
+              compare your design with an implementation.
+            </p>
+          </div>
+
+          <button class="btn primary module-complete-btn" id="mark-complete-btn">
+            Mark this module as complete
+          </button>
+          <p class="complete-status" id="complete-status">
+            Not marked as complete yet.
+          </p>
+        </section>
+
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>Web Analytics & Observability Tutorial</span>
+    <span>Module 3 · Telemetry in Web Applications</span>
+  </div>
+</footer>
+
+<script src="module.js"></script>
+</body>
+</html>
