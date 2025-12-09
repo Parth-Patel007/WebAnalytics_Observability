@@ -13,9 +13,17 @@ It simulates a tiny “orders system” with real metrics, logs, traces, and a b
 
 ---
 
+## Prerequisites
+
+- **Docker & Docker Compose** installed and running
+- Navigate to this directory from the repository root:
+  ```bash
+  cd "WAO demo project"
+  ```
+
 ## How to Run the Project
 
-1. Make sure you have **Docker & Docker Compose** installed and should be up and running.
+1. Make sure **Docker Desktop** is running.
 2. Start everything:
 
 ```bash
@@ -27,7 +35,7 @@ docker compose up --build
 | Component                           | URL                                                              |
 | ----------------------------------- | ---------------------------------------------------------------- |
 | **Load Simulator UI**               | [http://localhost:8000/simulate](http://localhost:8000/simulate) |
-| **API Service**                     | [http://localhost:8000](http://localhost:8000)                   |
+| **API Documentation (Swagger UI)**  | [http://localhost:8000/docs](http://localhost:8000/docs)         |
 | **Prometheus**                      | [http://localhost:9090](http://localhost:9090)                   |
 | **Grafana**                         | [http://localhost:3000](http://localhost:3000)                   |
 | **Logs & Traces (Grafana Explore)** | [http://localhost:3000/explore](http://localhost:3000/explore)   |
