@@ -22,7 +22,6 @@
 </header>
 
 <main>
-  <!-- Hero -->
   <section class="module-hero">
     <div class="container module-hero-inner">
       <div class="module-hero-main">
@@ -53,11 +52,9 @@
     </div>
   </section>
 
-  <!-- Layout -->
   <section class="module-body">
     <div class="container module-layout">
 
-      <!-- Sidebar nav -->
       <aside class="module-sidebar">
         <p class="sidebar-title">Grafana topics</p>
         <nav class="sidebar-nav">
@@ -70,30 +67,264 @@
         </nav>
       </aside>
 
-      <!-- Content skeleton -->
       <article class="module-content">
         <section id="s1" class="module-section">
-          <h2>1. Grafana overview</h2>
+          <h2>1. Grafana Overview</h2>
+
+          <h3 class="tech-name-heading">Grafana 📊</h3>
+
+          <h3 class="subheading">Overview - What it does</h3>
+
+          <p>
+            Grafana is the final layer in our observability stack—it's the universal
+            visualization, analysis, and alerting platform. At its core, Grafana is
+            an open-source web application designed to help you query, visualize, and
+            understand your metrics, logs, and traces, no matter where they are stored.
+          </p>
+
+          <p>
+            Unlike Prometheus or Loki, Grafana is data-source agnostic. It doesn't
+            store data itself; instead, it acts as a powerful front-end, connecting to
+            various back-end databases (like Prometheus, Loki, MySQL, ElasticSearch,
+            and many others) and transforming their raw data into beautiful, actionable
+            dashboards.
+          </p>
+          
+          <h3 class="subheading">The Visualization Layer</h3>
+          <p>
+            Grafana's main component is the dashboard, which is composed of several
+            panels. A panel is a single visualization (a graph, a single stat, or a
+            table) representing data fetched from one or more data sources. This allows
+            engineers to consolidate all aspects of their system's health onto a single
+            screen.
+          </p>
+          
+
+          <hr/>
+
+          <h3 class="subheading">History</h3>
+          <p>
+            Grafana was originally released in 2014 as a fork of Kibana 3, but was
+            quickly re-architected to focus entirely on flexible time-series
+            visualization. Its popularity exploded with the rise of the Prometheus and
+            Kubernetes ecosystems, establishing itself as the de-facto standard for
+            operational dashboards in cloud-native environments.
+          </p>
         </section>
+
+        <hr/>
+        <img
+            src="Grafana.png"
+            alt="Diagram showing the Prometheus server, its pull model scraping various exporters and targets, storing data in the TSDB, and integrating with Alertmanager and Grafana."
+          />
 
         <section id="s2" class="module-section">
-          <h2>2. Data sources</h2>
+          <h2>2. Data Sources</h2>
+
+          <p>
+            The first step in using Grafana is defining a Data Source. This is a
+            connection configuration that tells Grafana how to reach and query your
+            back-end storage systems.
+          </p>
+
+          <h3 class="subheading">Connecting the Triad (Loki & Prometheus)</h3>
+
+          <p>
+            In our stack, the two most critical data sources are Prometheus (for
+            metrics) and Loki (for logs).
+          </p>
+          
+          <div class="callout callout-example">
+            <h4>Prometheus Data Source Configuration</h4>
+            <p>
+              You simply tell Grafana the URL where your Prometheus server is running
+              (e.g., <code>http://localhost:9090</code>) and set the data source name, typically
+              Prometheus. Grafana then knows to use PromQL to query this source.
+            </p>
+          </div>
+
+          <div class="callout callout-example">
+            <h4>Loki Data Source Configuration</h4>
+            <p>
+              Similarly, you provide the URL for your Loki server (e.g.,
+              <code>http://loki:3100</code>). Grafana uses the LogQL language to query this
+              source, allowing you to filter and aggregate log lines.
+            </p>
+          </div>
+          
+          <p>
+            Grafana's ability to seamlessly switch between data sources within the same
+            dashboard is what makes the
+            Metrics-Logs-Traces (MLT) correlation possible, forming the basis of
+            true observability.
+          </p>
         </section>
+
+        <hr/>
 
         <section id="s3" class="module-section">
-          <h2>3. Panels & dashboards</h2>
+          <h2>3. Panels & Dashboards</h2>
+
+          <p>
+            A Dashboard is the container for all your visualizations, while a
+            Panel is the specific visualization component.
+          </p>
+
+          <h3 class="subheading">Panel Types</h3>
+          <p>
+            Grafana offers a wide array of visualization options, allowing you to choose
+            the best format for the data you are presenting:
+          </p>
+          <ul>
+            <li>Graph (Time Series): The standard line graph for showing trends
+              over time (e.g., CPU utilization, request rate).</li>
+            <li>Stat (Single Value): Displays a large single number, often the
+              latest value or an aggregate (e.g., current error count).</li>
+            <li>Table: Excellent for showing detailed, labeled data or logs.</li>
+            <li>Heatmap: Used for visualizing distributions over two dimensions,
+              often latency over time.</li>
+          </ul>
+
+          <h3 class="subheading">The Query Editor</h3>
+          <p>
+            Every panel has a Query Editor where you select the Data Source and write
+            the query (e.g., PromQL or LogQL). Grafana provides auto-completion and a
+            query builder to make this process easier.
+          </p>
+
+          <p class="term">
+            Dashboard Best Practice: Always design dashboards for a specific
+            audience or purpose. For example, a high-level "Executive Dashboard" should
+            only show 5-7 key health metrics, while a "Debugging Dashboard" should
+            contain highly detailed metrics and correlating logs.
+          </p>
         </section>
+
+        <hr/>
 
         <section id="s4" class="module-section">
-          <h2>4. Variables & filters</h2>
+          <h2>4. Variables & Filters</h2>
+
+          <p>
+            Variables are one of the most powerful features in Grafana, enabling
+            interactive, reusable, and dynamic dashboards.
+          </p>
+
+          <h3 class="subheading">What is a Variable?</h3>
+          <p>
+            A variable is a value that can be changed through a dropdown list at the top
+            of the dashboard. When you change the variable's value, the query in every
+            panel on that dashboard automatically updates to filter the results.
+          </p>
+
+          <h3 class="subheading">Example: Instance Filtering</h3>
+          <p>
+            Instead of creating separate dashboards for every server (instance), you can
+            use a variable called <code>$instance</code>.
+          </p>
+          <div class="callout callout-example">
+            <p>
+              <strong>PromQL Query using a Variable:</strong>
+              <pre><code>http_requests_total{instance="$instance"}</code></pre>
+            </p>
+            <p>
+              The variable's values can be automatically populated by running a PromQL
+              query against your Prometheus source (e.g., <code>label_values(up, instance)</code>).
+            </p>
+          </div>
+
+          <p>
+            Variables transform a static dashboard into an interactive control panel,
+            allowing users to dynamically filter by service, container, hostname, or
+            user group.
+          </p>
         </section>
+
+        <hr/>
 
         <section id="s5" class="module-section">
-          <h2>5. Building observability views</h2>
+          <h2>5. Building Observability Views</h2>
+
+          <p>
+            The goal of using Grafana with Prometheus and Loki is to establish clear
+            links between your metrics, logs, and traces.
+          </p>
+          
+          <h3 class="subheading">The Logs & Metrics Connection</h3>
+          <p>
+            Grafana allows you to jump directly from a metric spike to the related logs
+            at that exact time.
+          </p>
+          <ul>
+            <li>
+              Process: You see a spike in a metric (e.g., request error rate) on a
+              Graph panel.
+            </li>
+            <li>
+              Drilldown: You click on the spike, and Grafana can be configured to
+              open a linked panel or dashboard that automatically queries Loki using the
+              same labels (like `service="web-api"`) for that time window.
+            </li>
+          </ul>
+          
+          <blockquote class="standout-opinion">
+            Key Concept (MLT Correlation): A mature Grafana dashboard provides a unified view.
+            It allows the user to identify an anomaly (Metrics), investigate the cause
+            (Logs), and isolate the problematic code path (Traces), all without leaving
+            the platform.
+          </blockquote>
+
         </section>
 
+        <hr/>
+
         <section id="s6" class="module-section">
-          <h2>6. Sharing & organizing dashboards</h2>
+          <h2>6. Sharing & Organizing Dashboards</h2>
+          <img
+            src="grafana-proj.png"
+            alt="Diagram showing the Prometheus server, its pull model scraping various exporters and targets, storing data in the TSDB, and integrating with Alertmanager and Grafana."
+          />
+          <img
+            src="grafanaproj.png"
+            alt="Diagram showing the Prometheus server, its pull model scraping various exporters and targets, storing data in the TSDB, and integrating with Alertmanager and Grafana."
+          />
+
+          <p>
+            The value of a dashboard is maximized when it is easily shareable and well-organized.
+          </p>
+
+          <h3 class="subheading">Provisioning (Code-Based Management)</h3>
+          <p>
+            While you can create dashboards manually in the UI, modern practice dictates
+            using Dashboard Provisioning. Dashboards are defined as JSON files
+            and stored in your version control system (like Git). Grafana is configured
+            to automatically load these files on startup, ensuring that dashboards are
+            version-controlled and consistent across all environments.
+          </p>
+
+          <h3 class="subheading">Folders and Permissions</h3>
+          <p>
+            Grafana uses Folders to logically group dashboards (e.g., "Team A Services,"
+            "Infrastructure"). This is crucial for manageability and for applying
+            Permissions to control which teams or users can view or edit specific
+            sets of operational data.
+          </p>
+
+          <div class="next-step-callout">
+            <h4>Module Complete!</h4>
+            <p>
+              You have now learned the entire MLT stack! You're ready to apply these skills
+              to the final, crucial step: configuring Alerting and Incident Response
+              to turn your collected data into meaningful action.
+            </p>
+          </div>
+          
+          <section id="completion" class="module-section">
+            <h2>Module Completion</h2>
+            <button id="mark-complete-btn" class="module-complete-btn">Mark this module as complete</button>
+            <p id="complete-status" class="complete-status">Not marked as complete yet.</p>
+          </section>
+
         </section>
       </article>
 

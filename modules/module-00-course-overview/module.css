@@ -1,11 +1,8 @@
-/* --- Base Module Layout and Structure Styles --- */
-
-/* Module 1 specific styles (used for all modules now) */
+/* Module 1 specific styles */
 
 .module-hero {
   padding: 2.5rem 0 1.5rem;
   border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-  /* Using a subtle radial gradient for the hero background */
   background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), #020617);
 }
 
@@ -140,12 +137,11 @@
 }
 
 .sidebar-link.active {
-  /* Using a green hue to match the overall site style */
   background: rgba(22, 163, 74, 0.35);
   border-color: #22c55e;
 }
 
-/* Content General Styles */
+/* Content */
 
 .module-content {
   font-size: 0.95rem;
@@ -244,120 +240,7 @@
   color: #ffffff;
 }
 
-/* External Links */
-.external-links-list {
-  margin-top: 0.6rem;
-  padding-left: 1.1rem;
-}
-
-.external-links-list li {
-  margin-bottom: 0.4rem;
-}
-
-.external-links-list a {
-  color: #93c5fd;
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-
-.external-links-list a:hover {
-  text-decoration: underline;
-}
-
-/* --- Prometheus Module Specific Styles (for better visual hierarchy) --- */
-
-/* Styling for the secondary headings used inside sections */
-.module-content .subheading {
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: #a7f3d0; /* A light green for internal headings */
-  border-bottom: 1px dashed rgba(16, 185, 129, 0.2);
-  padding-bottom: 0.25rem;
-}
-
-/* Styling for the main tech name section */
-.module-content .tech-name-heading {
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  font-size: 1.6rem;
-  color: #fcd34d; /* Yellow/Gold color for distinction */
-}
-
-/* Special style for the "Our Opinion" blockquote */
-.module-content blockquote.standout-opinion {
-  margin: 1.5rem 0;
-  padding: 1rem 1.25rem;
-  border-left: 5px solid #ff6f00; /* Prometheus orange */
-  background: rgba(255, 111, 0, 0.15); /* Light orange background */
-  color: #f9fafb;
-  font-style: italic;
-  border-radius: 4px;
-}
-
-.module-content blockquote.standout-opinion strong {
-  color: #ffffff; /* Ensure bold text pops */
-}
-
-/* Styling for code blocks (for PromQL and Docker commands) */
-.module-content pre {
-  background-color: #0f172a; /* Dark background */
-  border: 1px solid #334155;
-  border-left: 4px solid #3b82f6; /* Blue border for code */
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  overflow-x: auto;
-  font-size: 0.9rem;
-}
-
-.module-content code {
-  color: #a7f3d0; /* Light green for code text */
-  font-family: 'Consolas', 'Monaco', monospace;
-}
-
-/* Styling for the "Next Steps" callout at the end */
-.next-step-callout {
-  margin-top: 2rem;
-  padding: 1.25rem;
-  background: rgba(30, 58, 138, 0.8); /* Dark blue background */
-  border: 1px solid #60a5fa;
-  border-radius: 8px;
-}
-
-.next-step-callout h4 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  color: #bfdbfe;
-  font-size: 1.1rem;
-}
-/* Styling for the Quiz List to separate questions visually */
-.module-content .quiz-list {
-  list-style: none; /* Remove default numbering/bullets */
-  padding-left: 0;
-  margin-top: 1rem;
-}
-
-.module-content .quiz-list li {
-  margin-bottom: 1.5rem; /* Space between questions */
-}
-
-.module-content .quiz-list li .callout-note {
-  margin-top: 0.5rem; /* Space between question and answer box */
-  padding: 0.5rem 0.9rem;
-}
-/* Image styling for content sections */
-.module-content img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin: 1.5rem auto; /* Center the image with good vertical spacing */
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  border-radius: 6px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* --- Responsive Layout Adjustments --- */
+/* Responsive */
 
 @media (max-width: 900px) {
   .module-hero-inner {
@@ -377,3 +260,23 @@
     margin-bottom: 1rem;
   }
 }
+
+.external-links-list {
+  margin-top: 0.6rem;
+  padding-left: 1.1rem;
+}
+
+.external-links-list li {
+  margin-bottom: 0.4rem;
+}
+
+.external-links-list a {
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.external-links-list a:hover {
+  text-decoration: underline;
+}
+

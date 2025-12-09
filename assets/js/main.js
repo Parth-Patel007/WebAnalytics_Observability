@@ -8,12 +8,12 @@ const modules = [
     title: "Course Overview",
     part: "Module 0",
     duration: "0.5 hr",
-    status: "Planned",
+    status: "Ready",
     tags: ["intro", "structure"],
     description:
       "High-level overview of the course, tools required, and how to navigate the modules.",
     // path can be added later when Module 0 exists
-    path: null,
+    path: "modules/module-00-course-overview/index.html",
   },
   {
     id: "m1",
