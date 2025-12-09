@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Module 0: Course Overview - Bloom's Taxonomy Structure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../../assets/css/main.css" />
+  <link rel="stylesheet" href="module.css" />
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <span class="logo-mark">WAO</span>
+      <span class="logo-text">Web Analytics & Observability</span>
+    </div>
+    <nav class="nav">
+      <a href="../../../index.html#overview">Overview</a>
+      <a href="../../../index.html#modules">Curriculum</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="module-hero">
+    <div class="container module-hero-inner">
+      <div class="module-hero-main">
+        <p class="module-kicker">Introduction · Foundations</p>
+        <h1>Welcome to Web Analytics & Observability (WAO)</h1>
+        <p class="module-lead">
+          Your comprehensive roadmap to understanding, implementing, and leveraging
+          the three pillars of observability—Metrics, Logs, and Traces—for modern web applications.
+        </p>
+        <div class="module-meta-row">
+          <span>⏱️ Estimated time: 0.5 hours</span>
+          <span> foundational module</span>
+        </div>
+      </div>
+
+      <div class="module-hero-side">
+        <a class="back-link" href="../../../index.html#modules">← Back to curriculum</a>
+        <div class="module-summary-card">
+          <h2>Module outline (Bloom's Levels)</h2>
+          <ul>
+            <li>Remembering: Tools & Setup</li>
+            <li>Understanding: Context & Flow</li>
+            <li>Applying: Implementation</li>
+            <li>Analyzing: Core Concepts</li>
+            <li>Evaluating: Impact & Comparison</li>
+            <li>Creating: Future Directions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="module-body">
+    <div class="container module-layout">
+
+      <aside class="module-sidebar">
+        <p class="sidebar-title">Bloom's Taxonomy Levels</p>
+        <nav class="sidebar-nav">
+          <a href="#bloom-remember" class="sidebar-link active">1. Remembering (Recall)</a>
+          <a href="#bloom-understand" class="sidebar-link">2. Understanding (Explain)</a>
+          <a href="#bloom-apply" class="sidebar-link">3. Applying (Implement)</a>
+          <a href="#bloom-analyze" class="sidebar-link">4. Analyzing (Differentiate)</a>
+          <a href="#bloom-evaluate" class="sidebar-link">5. Evaluating (Justify)</a>
+          <a href="#bloom-create" class="sidebar-link">6. Creating (Design)</a>
+        </nav>
+      </aside>
+
+      <article class="module-content">
+
+        <section id="bloom-remember" class="module-section">
+          <h2>1. Remembering: Tools, Definitions, and Setup 🧠</h2>
+
+          <p>
+            This course is built on the industry-leading open-source Observability stack. We focus on tools provided by the Cloud Native Computing Foundation (CNCF).
+          </p>
+
+          <h3 class="tech-name-heading">Prometheus 📈</h3>
+          <p>
+            The primary time-series database and metric collection engine. It uses a pull model to scrape metrics from targets at regular intervals.
+          </p>
+
+          <h3 class="tech-name-heading">Loki 💾</h3>
+          <p>
+            The logging component, designed to be cost-effective and highly scalable. Unlike ElasticSearch, Loki indexes only metadata (labels), not the full log text, making querying and storage extremely efficient.
+          </p>
+
+          <h3 class="tech-name-heading">Grafana 🖥️</h3>
+          <p>
+            The visualization layer. Grafana acts as the powerful front-end, connecting to both Prometheus and Loki to build integrated, actionable dashboards for all telemetry data.
+          </p>
+          
+          <h3 class="tech-name-heading">OpenTelemetry (OTel) 🔗</h3>
+          <p>
+            The instrumentation standard. OTel provides the APIs, SDKs, and collectors to generate and manage metrics, logs, and traces in a standardized, vendor-neutral way.
+          </p>
+          
+          <hr/>
+          
+          <h3 class="subheading">Prerequisites</h3>
+          <p>
+            To successfully complete the hands-on labs in this course, you must have the following software installed:
+          </p>
+          <ul>
+            <li>VS Code / Code Editor: For editing HTML, CSS, and configuration files.</li>
+            <li>Docker and Docker Compose: Crucial for running our entire observability stack (Prometheus, Grafana, Loki) locally with a single command.</li>
+            <li>Basic familiarity with HTML, CSS, and vanilla JavaScript.</li>
+            <li>Git: For managing the course project code.</li>
+          </ul>
+
+        </section>
+
+        <hr/>
+        
+        <section id="bloom-understand" class="module-section">
+          <h2>2. Understanding: Context and Course Flow 💡</h2>
+
+          <h3 class="subheading">The Modern Web Problem</h3>
+          <p>
+            In the past, web applications were monolithic and predictable. Today, they are distributed across microservices, containers (like Docker), and serverless functions. When a user experiences an error, pinpointing the source across dozens of interdependent services becomes nearly impossible using traditional monitoring alone.
+          </p>
+
+          <h3 class="subheading">History and Context</h3>
+          <p>
+            Observability as a concept originated in Control Theory and was popularized in the software world by teams at Google, Twitter, and Netflix. It is defined as the measure of how well internal states of a system can be inferred from its external outputs. For software, this means instrumenting the code to generate data (telemetry) that allows us to ask any question about the system *post-facto*.
+          </p>
+          
+          <blockquote class="standout-opinion">
+            Monitoring asks: "Is the system working?" (Predefined questions).
+            Observability asks: "Why is the system not working?" (Unforeseen questions).
+          </blockquote>
+
+          <h3 class="subheading">Benefits and Challenges</h3>
+          <ul>
+            <li>
+              Benefits: Faster Mean Time To Resolution (MTTR), greater confidence in deploying code, and a deeper understanding of user experience.
+            </li>
+            <li>
+              Challenges: Requires initial code instrumentation, can generate massive amounts of data (cost management), and requires shifting the engineering mindset from reactive to proactive.
+            </li>
+          </ul>
+          
+          <hr/>
+          
+          <h3 class="subheading">Course Flow</h3>
+          <p>
+            The course is structured to follow the life cycle of telemetry data:
+          </p>
+          <ol>
+            <li>Foundations (M0-M1): Defining observability and telemetry concepts.</li>
+            <li>Collection & Storage (M2-M3): Focus on instrumentation and getting data into the backend systems (Prometheus, Loki).</li>
+            <li>Visualization & Action (M4-M5): Building dashboards in Grafana and setting up alerting.</li>
+            <li>Project (M6): Applying all concepts to a real-world, end-to-end web application.</li>
+          </ol>
+
+        </section>
+
+        <hr/>
+
+        <section id="bloom-apply" class="module-section">
+          <h2>3. Applying: Implementation and Hands-On Skills 🛠️</h2>
+          
+          <p>
+            At the conclusion of this tutorial, the student should be able to implement these concepts:
+          </p>
+
+          <h3 class="subheading">Application & Analysis (Implement)</h3>
+          <ul>
+            <li>
+              Implement a basic Prometheus configuration to scrape metrics from a web service using an exporter.
+            </li>
+            <li>
+              Construct a simple Grafana dashboard that consumes data from both Prometheus and Loki simultaneously.
+            </li>
+          </ul>
+        </section>
+
+        <hr/>
+        
+        <section id="bloom-analyze" class="module-section">
+          <h2>4. Analyzing: Core Concepts and Differentiation 🧐</h2>
+          
+          <p>
+            This module introduces the key concepts needed to break down and differentiate system health:
+          </p>
+
+          <h3 class="subheading">Knowledge & Comprehension (Understand)</h3>
+          <ul>
+            <li>
+              Define the difference between monitoring and observability in the context of complex web systems.
+            </li>
+            <li>
+              Identify the three pillars of observability: Metrics, Logs, and Traces, and explain their unique roles.
+            </li>
+          </ul>
+        </section>
+
+        <hr/>
+        
+        <section id="bloom-evaluate" class="module-section">
+          <h2>5. Evaluating: Impact and Justification ✨</h2>
+          
+          <h3 class="subheading">Synthesis & Evaluation (Compare)</h3>
+          <ul>
+            <li>
+              Compare and contrast the benefits and common challenges of adopting an observability approach versus traditional static alerting.
+            </li>
+            <li>
+              Justify the use of OpenTelemetry as a vendor-neutral standard for instrumentation across different programming languages.
+            </li>
+          </ul>
+          
+          <hr/>
+          
+          <h3 class="subheading">Overall Expected Learnings and Impact</h3>
+          <p>
+            By the end of this comprehensive tutorial, you won't just know how to run commands; you'll possess the core philosophy and practical skills to integrate Observability into any web development environment, drastically improving your ability to diagnose and prevent production issues.
+          </p>
+          
+          <h3 class="subheading">The Three Takeaways</h3>
+          
+          <div class="info-block">
+            <h4>1. A Unified Observability Mindset</h4>
+            <p>
+              You will move past fragmented monitoring tools and gain a holistic understanding of system health. You'll be equipped to ask deep diagnostic questions using Metrics, Logs, and Traces (MLT) simultaneously, moving from reactive firefighting to proactive system management.
+            </p>
+          </div>
+
+          <div class="info-block">
+            <h4>2. Hands-On Tool Proficiency</h4>
+            <p>
+              You'll gain practical, marketable skills in the leading CNCF tools: configuring Prometheus for reliable metric collection, designing interactive dashboards in Grafana, and using OpenTelemetry for standardized instrumentation across JavaScript applications.
+            </p>
+          </div>
+          
+          <div class="info-block">
+            <h4>3. Project-Based Confidence</h4>
+            <p>
+              The capstone project, where you monitor a real HTML/CSS/JS application end-to-end, ensures that you can immediately apply these skills to any modern web service, making you a valuable asset to teams focused on site reliability and application performance.
+            </p>
+          </div>
+        </section>
+        
+        <hr/>
+
+        <section id="bloom-create" class="module-section">
+          <h2>6. Creating: Future Potential and New Solutions 🚀</h2>
+
+          <p>
+            The field of observability is constantly evolving. After mastering this stack, you will be prepared for several advanced directions:
+          </p>
+
+          <h3 class="subheading">Expanding Data Collection</h3>
+          <ul>
+            <li>Evolving OpenTelemetry: OTel is rapidly becoming the single standard for instrumentation. Future work involves extending OTel to more languages and advanced data correlation features.</li>
+            <li>Cloud Integration: Migrating the local Docker stack to managed services like AWS CloudWatch, Azure Monitor, or Google Cloud Operations (all of which integrate with the technologies learned here).</li>
+          </ul>
+          
+          <h3 class="subheading">Advanced Analytics</h3>
+          <p>
+            Beyond simple alerting, the next step involves using Machine Learning to automatically detect anomalies and predict system failures based on the metric data you are now collecting. The principles of time-series analysis you learn here are the foundation for these advanced systems.
+          </p>
+
+          <div class="next-step-callout">
+            <h4>Module Complete!</h4>
+            <p>
+              You're ready to start your journey. Head to Module 1 to dive into the foundational concepts of Telemetry in Web Applications.
+            </p>
+          </div>
+          
+          <section id="completion" class="module-section">
+            <h2>Module Completion</h2>
+            <button id="mark-complete-btn" class="module-complete-btn">Mark this module as complete</button>
+            <p id="complete-status" class="complete-status">Not marked as complete yet.</p>
+          </section>
+
+        </section>
+
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>Web Analytics & Observability Tutorial</span>
+    <span>Module 0 – Course Overview and Preparation</span>
+  </div>
+</footer>
+
+<script src="module.js"></script>
+</body>
+</html>
