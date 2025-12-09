@@ -157,6 +157,11 @@
   margin-bottom: 0.4rem;
 }
 
+.module-section h3 {
+  margin-top: 0.7rem;
+  margin-bottom: 0.35rem;
+}
+
 .module-section p {
   margin-top: 0.35rem;
   margin-bottom: 0.35rem;
@@ -208,6 +213,14 @@
   border: 1px solid rgba(22, 163, 74, 0.9);
 }
 
+/* Opinion callout – for "our view" sections */
+
+.callout-opinion {
+  background: rgba(76, 29, 149, 0.7);
+  border: 1px solid rgba(196, 181, 253, 0.9);
+  box-shadow: 0 0 0 1px rgba(30, 64, 175, 0.5);
+}
+
 /* Checklist */
 
 .checklist {
@@ -228,10 +241,66 @@
   top: 0;
 }
 
+/* Screenshot figure */
+
+.module-figure {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.module-figure img {
+  max-width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+.module-figure figcaption {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+
+/* Quiz */
+
+.quiz-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.quiz-list li {
+  margin-bottom: 0.4rem;
+}
+
+.quiz-list details {
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 10px;
+  border: 1px solid rgba(51, 65, 85, 0.9);
+  padding: 0.4rem 0.6rem;
+}
+
+.quiz-list summary {
+  cursor: pointer;
+}
+
 /* Completion */
 
 .module-complete-btn {
   margin-top: 1rem;
+}
+
+#mark-complete-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  background: rgba(30, 64, 175, 0.8);
+  color: #f9fafb;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#mark-complete-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .complete-status {
@@ -279,4 +348,3 @@
 .external-links-list a:hover {
   text-decoration: underline;
 }
-
