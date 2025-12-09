@@ -1,4 +1,4 @@
-/* Module 1 specific styles */
+/* Module 5 specific styles */
 
 .module-hero {
   padding: 2.5rem 0 1.5rem;
@@ -157,6 +157,11 @@
   margin-bottom: 0.4rem;
 }
 
+.module-section h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.4rem;
+}
+
 .module-section p {
   margin-top: 0.35rem;
   margin-bottom: 0.35rem;
@@ -169,19 +174,17 @@
   padding-left: 1.25rem;
 }
 
-/* Terms */
-
-.term {
-  margin-top: 0.9rem;
-  padding: 0.75rem 0.9rem;
-  border-radius: 10px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(51, 65, 85, 0.9);
+.module-section li {
+  margin-bottom: 0.25rem;
 }
 
-.term h3 {
-  margin: 0 0 0.25rem;
-  font-size: 1rem;
+.module-section code {
+  background: rgba(15, 23, 42, 0.9);
+  padding: 0.15rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: #93c5fd;
+  border: 1px solid rgba(51, 65, 85, 0.9);
 }
 
 /* Callouts */
@@ -208,24 +211,114 @@
   border: 1px solid rgba(22, 163, 74, 0.9);
 }
 
-/* Checklist */
-
-.checklist {
-  list-style: none;
-  padding-left: 0;
+.callout h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
-.checklist li {
-  position: relative;
-  padding-left: 1.4rem;
-  margin-bottom: 0.3rem;
+.callout p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.checklist li::before {
-  content: "▢";
-  position: absolute;
-  left: 0;
-  top: 0;
+.callout ul,
+.callout ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Highlight blocks where you still need to change something yourself */
+.todo-user {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: #b91c1c; /* bright red */
+  color: #fef2f2;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Code snippet cards with copy button */
+.code-snippet {
+  margin: 1rem 0;
+  padding: 0.75rem 0.75rem 0.6rem;
+  border-radius: 0.75rem;
+  background: #020617;            /* dark slate */
+  border: 1px solid #1f2937;      /* subtle border */
+}
+
+.code-snippet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.code-snippet-label {
+  opacity: 0.85;
+}
+
+.code-snippet-copy {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  background: #1f2937;
+  color: #e5e7eb;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.code-snippet-copy:hover {
+  transform: translateY(-1px);
+}
+
+.code-snippet-copy.copied {
+  background: #16a34a; /* green when copied */
+}
+
+.code-snippet pre {
+  margin: 0;
+  font-size: 0.85rem;
+  overflow-x: auto;
+}
+
+.code-snippet code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  background: transparent;
+  padding: 0;
+  border: none;
+  color: #e5e7eb;
+}
+
+.callout-exercise .code-snippet,
+.callout-note .code-snippet {
+  background: #020617;
+  border-color: #1f2937;
+}
+
+/* Figures */
+.module-figure {
+  margin: 1.5rem 0;
+}
+
+.module-figure img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.module-figure figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  font-style: italic;
 }
 
 /* Completion */
@@ -260,23 +353,3 @@
     margin-bottom: 1rem;
   }
 }
-
-.external-links-list {
-  margin-top: 0.6rem;
-  padding-left: 1.1rem;
-}
-
-.external-links-list li {
-  margin-bottom: 0.4rem;
-}
-
-.external-links-list a {
-  color: #93c5fd;
-  text-decoration: none;
-  font-size: 0.95rem;
-}
-
-.external-links-list a:hover {
-  text-decoration: underline;
-}
-
