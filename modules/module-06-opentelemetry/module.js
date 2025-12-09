@@ -4,7 +4,7 @@
   const sections = document.querySelectorAll(".module-section");
   const completeBtn = document.getElementById("mark-complete-btn");
   const completeStatus = document.getElementById("complete-status");
-  const STORAGE_KEY = "wao_module_3_complete";
+  const STORAGE_KEY = "wao_module_6_complete";
 
   // Smooth scrolling
   sidebarLinks.forEach((link) => {

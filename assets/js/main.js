@@ -93,6 +93,17 @@ const modules = [
     "Learn how to build dashboards that visualize metrics and logs from Prometheus and Loki.",
   path: "modules/module-07-grafana/index.html",
 },
+{
+  id: "m8",
+  title: "Guided Project",
+  part: "Module 8 — Project",
+  duration: "Self paced",
+  status: "Ready",
+  tags: ["Prometheus","loki", "Otel","grafana", "dashboards","Self-paced", "Project"],
+  description:
+    "Working on a self paced guided project.",
+  path: "modules/module-08-guided-project/index.html",
+},
   // ...
 ];
 
@@ -179,11 +190,20 @@ function setActiveModule(id) {
   openBtn.textContent = "Open Module";
 }
 
-// Progress logic (placeholder for now)
 function getCompletedModuleCount() {
-  // For now, nothing is completed.
-  // Later we can tie this into localStorage or backend state.
-  return 0;
+  let count = 0;
+
+  // There are modules 0 to 9 (10 modules total)
+  for (let i = 0; i <= 9; i++) {
+    const key = `wao_module_${i}_complete`;
+    const value = localStorage.getItem(key);
+
+    if (value === "true") {
+      count++;
+    }
+  }
+
+  return count;
 }
 
 function updateProgressUI() {

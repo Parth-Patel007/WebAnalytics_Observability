@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Capstone Project – Observable Orders</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="module.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="logo">
+          <span class="logo-mark">WAO</span>
+          <span class="logo-text">Web Analytics & Observability</span>
+        </div>
+        <nav class="nav">
+          <a href="../../index.html#overview">Overview</a>
+          <a href="../../index.html#modules">Curriculum</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero -->
+      <section class="module-hero">
+        <div class="container module-hero-inner">
+          <div class="module-hero-main">
+            <p class="module-kicker">Capstone · Guided Project</p>
+            <h1>Observable Orders – End-to-End Observability Project</h1>
+            <p class="module-lead">
+              In this capstone you’ll design and build a small “orders” system
+              instrumented with OpenTelemetry, Prometheus, Loki, Tempo, and
+              Grafana. You get the architecture and checkpoints; the
+              implementation is up to you.
+            </p>
+            <div class="module-meta-row">
+              <span>⏱️ Estimated time: 4–6 hours</span>
+              <span>🧩 Build & explore</span>
+              <span>🎓 Use everything you’ve learned</span>
+            </div>
+          </div>
+
+          <div class="module-hero-side">
+            <a class="back-link" href="../../index.html#modules"
+              >← Back to curriculum</a
+            >
+            <div class="module-summary-card">
+              <h2>What you’ll build</h2>
+              <ul>
+                <li>Two small Python services (API + Worker)</li>
+                <li>OpenTelemetry instrumentation (metrics, logs, traces)</li>
+                <li>OTel Collector → Prometheus, Loki, Tempo</li>
+                <li>A Grafana dashboard & a load simulator UI</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Layout -->
+      <section class="module-body">
+        <div class="container module-layout">
+          <!-- Sidebar nav -->
+          <aside class="module-sidebar">
+            <p class="sidebar-title">Project guide</p>
+            <nav class="sidebar-nav">
+              <a href="#s1" class="sidebar-link active">1. Overview & goals</a>
+              <a href="#s2" class="sidebar-link">2. Setup & prerequisites</a>
+              <a href="#s3" class="sidebar-link">3. Phase 1 – Services</a>
+              <a href="#s4" class="sidebar-link"
+                >4. Phase 2 – Telemetry pipeline</a
+              >
+              <a href="#s5" class="sidebar-link"
+                >5. Phase 3 – Dashboards & load UI</a
+              >
+              <a href="#s6" class="sidebar-link"
+                >6. Final checklist & model answer</a
+              >
+            </nav>
+          </aside>
+
+          <!-- Content -->
+          <article class="module-content">
+            <!-- Section 1 -->
+            <section id="s1" class="module-section">
+              <h2>1. Project overview & goals</h2>
+
+              <p>
+                In this capstone you’ll design and build a tiny but fully
+                observable “orders” system. The architecture is inspired by real
+                production setups, but scaled down so you can run everything
+                locally with Docker and explore it safely.
+              </p>
+
+              <p>
+                You will not be given the final code here. Instead, you’ll get:
+              </p>
+              <ul>
+                <li>Clear requirements for what each part should do.</li>
+                <li>
+                  How the technologies connect (services → collector →
+                  backends).
+                </li>
+                <li>Concrete checkpoints to test each step.</li>
+              </ul>
+
+              <div class="term">
+                <h3>The big picture</h3>
+                <p>
+                  You’ll create two Python services (API + Worker) that exchange
+                  requests and emit metrics, logs, and traces via OpenTelemetry.
+                  An OpenTelemetry Collector receives that telemetry and sends:
+                </p>
+                <ul>
+                  <li>Metrics → <strong>Prometheus</strong></li>
+                  <li>Logs → <strong>Loki</strong></li>
+                  <li>Traces → <strong>Tempo</strong></li>
+                </ul>
+                <p>
+                  <strong>Grafana</strong> sits on top as the single UI where
+                  you can explore everything.
+                </p>
+              </div>
+
+              <div class="term">
+                <h3>Where you will access each part (Localhost URLs)</h3>
+                <p>
+                  Once your system is running via Docker Compose, here is where
+                  everything lives:
+                </p>
+                <ul>
+                  <li>
+                    <strong>API Service</strong> (orders system):
+                    <code>http://localhost:8000</code>
+                  </li>
+                  <li>
+                    <strong>Load Simulation UI</strong>:
+                    <code>http://localhost:8000/simulate</code>
+                  </li>
+                  <li>
+                    <strong>Prometheus</strong> (metrics explorer):
+                    <code>http://localhost:9090</code>
+                  </li>
+                  <li>
+                    <strong>Grafana</strong> (dashboards, logs, traces):
+                    <code>http://localhost:3000</code>
+                  </li>
+                  <li>
+                    <strong>Loki Logs</strong> (via Grafana → Explore):
+                    <code>http://localhost:3000/explore</code>
+                  </li>
+                  <li>
+                    <strong>Tempo Traces</strong> (via Grafana → Explore):
+                    <code>http://localhost:3000/explore</code>
+                  </li>
+                  <li>
+                    <strong>OTel Collector Metrics Endpoint</strong> (scraped by
+                    Prometheus): <code>http://localhost:9464/metrics</code>
+                  </li>
+                </ul>
+                <p>
+                  These URLs will help you test, debug, and visualize each part
+                  of the project. You’ll refer to them throughout the build
+                  process.
+                </p>
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Goal of this module:</strong>
+                by the end, you should be able to open Grafana, trigger some
+                traffic, and see metrics, logs, and traces all telling the same
+                story.
+              </div>
+            </section>
+
+            <!-- Section 2 -->
+            <section id="s2" class="module-section">
+              <h2>2. Setup & prerequisites</h2>
+              <p>
+                Before building anything, make sure your environment is ready.
+                The whole project will run via Docker Compose.
+              </p>
+
+              <div class="term">
+                <h3>Required tools</h3>
+                <ul class="checklist">
+                  <li>
+                    Docker Desktop or Docker Engine is installed and running.
+                  </li>
+                  <li>Docker Compose is available from the command line.</li>
+                  <li>
+                    You can run basic Python projects (for local testing if
+                    needed).
+                  </li>
+                  <li>
+                    You can send HTTP requests (browser, curl, or a REST
+                    client).
+                  </li>
+                </ul>
+              </div>
+
+              <p>At the root of your project, create this folder structure:</p>
+              <ul>
+                <li><code>api-service/</code> – your main HTTP API</li>
+                <li><code>worker-service/</code> – a background worker API</li>
+                <li><code>grafana/</code> – provisioning & dashboards</li>
+                <li>
+                  <code>otel-collector-config.yaml</code> – collector config
+                </li>
+                <li><code>prometheus.yml</code> – Prometheus config</li>
+                <li><code>tempo.yaml</code> – Tempo config</li>
+                <li>
+                  <code>docker-compose.yml</code> – everything tied together
+                </li>
+              </ul>
+
+              <div class="callout callout-exercise">
+                <strong>Exercise:</strong>
+                Create the empty folder structure above (no code yet). Add a
+                placeholder <code>README.md</code> with a short description of
+                what you’re about to build.
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Checkpoint:</strong>
+                You should be able to run <code>ls</code> (or similar) in the
+                project root and see the directories and config files listed,
+                even if most of them are empty for now.
+              </div>
+            </section>
+
+            <!-- Section 3 -->
+            <section id="s3" class="module-section">
+              <h2>3. Phase 1 – Core services (API & Worker)</h2>
+              <p>
+                First, you’ll build the behaviour of your little system without
+                worrying about observability yet.
+              </p>
+
+              <div class="term">
+                <h3>API service – “orders” system</h3>
+                <p>
+                  In <code>api-service/</code>, create a Python web service
+                  (e.g. FastAPI) with these minimal endpoints:
+                </p>
+                <ul>
+                  <li>
+                    <strong>GET /health</strong> – returns a simple OK JSON.
+                  </li>
+                  <li>
+                    <strong>POST /orders</strong> – creates an order with:
+                    <ul>
+                      <li>an ID (timestamp or random string),</li>
+                      <li>a random numeric value,</li>
+                      <li>a random chance of being “failed” vs “processed”.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>GET /orders/{order_id}</strong> – returns the stored
+                    order from an in-memory dictionary.
+                  </li>
+                  <li>
+                    <strong>POST /orders/{order_id}/reprocess</strong> – later,
+                    this will call the worker service.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="term">
+                <h3>Worker service – reprocessing</h3>
+                <p>
+                  In <code>worker-service/</code>, create a second Python web
+                  service with at least one endpoint:
+                </p>
+                <ul>
+                  <li>
+                    <strong>POST /process</strong> – accepts an
+                    <code>order_id</code>, waits a random short delay, and
+                    randomly “succeeds” or “fails” processing that order.
+                  </li>
+                </ul>
+                <p>
+                  This service does not need persistent storage; it just
+                  simulates work.
+                </p>
+              </div>
+
+              <div class="callout callout-exercise">
+                <strong>Exercise:</strong>
+                <ul>
+                  <li>
+                    Implement both services locally (without Docker first, if
+                    you prefer).
+                  </li>
+                  <li>
+                    Use any Python web framework you like (FastAPI, Flask,
+                    etc.).
+                  </li>
+                  <li>
+                    Once happy, containerize each service with its own
+                    Dockerfile.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Checkpoint A – Local tests:</strong>
+                <ul class="checklist">
+                  <li>
+                    You can hit <code>/health</code> on both services and get a
+                    200.
+                  </li>
+                  <li>
+                    <code>POST /orders</code> returns a JSON body with an order
+                    ID.
+                  </li>
+                  <li>
+                    <code>GET /orders/{id}</code> returns what you just created.
+                  </li>
+                  <li>
+                    <code>POST /process</code> on the worker returns
+                    success/failure.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Checkpoint B – Docker:</strong>
+                <ul class="checklist">
+                  <li>Each service builds successfully as a Docker image.</li>
+                  <li>
+                    You can run them with <code>docker run</code> and hit their
+                    endpoints.
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Section 4 -->
+            <section id="s4" class="module-section">
+              <h2>4. Phase 2 – Telemetry pipeline</h2>
+              <p>
+                With the services working, it’s time to make them observable.
+                This phase wires up OpenTelemetry, the Collector, and the
+                backends (Prometheus, Loki, Tempo).
+              </p>
+
+              <div class="term">
+                <h3>Step 4.1 – Instrument services with OpenTelemetry</h3>
+                <p>
+                  In each service, add OpenTelemetry SDK setup so that every
+                  request can emit:
+                </p>
+                <ul>
+                  <li>
+                    <strong>Traces</strong> – spans around key operations like
+                    “create_order” and “worker_process_order”.
+                  </li>
+                  <li>
+                    <strong>Metrics</strong> – counters for orders
+                    created/failed, histograms for order value, etc.
+                  </li>
+                  <li>
+                    <strong>Logs</strong> – normal application logs exported via
+                    OTel so they can be correlated with traces.
+                  </li>
+                </ul>
+                <p>
+                  Configure both services to send telemetry to the Collector
+                  using an OTLP endpoint (e.g. via an environment variable).
+                </p>
+              </div>
+
+              <div class="term">
+                <h3>Step 4.2 – OpenTelemetry Collector</h3>
+                <p>
+                  In <code>otel-collector-config.yaml</code>, configure the
+                  Collector to:
+                </p>
+                <ul>
+                  <li>
+                    <strong>Receive</strong> OTLP telemetry from your services
+                    (on gRPC and/or HTTP).
+                  </li>
+                  <li>
+                    <strong>Export metrics</strong> on a Prometheus-scrapable
+                    <code>/metrics</code> endpoint.
+                  </li>
+                  <li>
+                    <strong>Export logs</strong> to Loki’s OTLP ingest endpoint.
+                  </li>
+                  <li>
+                    <strong>Export traces</strong> to Tempo’s OTLP endpoint.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="term">
+                <h3>Step 4.3 – Prometheus, Loki, Tempo</h3>
+                <ul>
+                  <li>
+                    In <code>prometheus.yml</code>, configure a single scrape
+                    target: the Collector’s Prometheus exporter endpoint.
+                  </li>
+                  <li>
+                    Add a Loki service to Docker Compose with a basic config
+                    suitable for local development.
+                  </li>
+                  <li>
+                    Add a Tempo service using <code>tempo.yaml</code> to store
+                    traces locally and expose an HTTP API for Grafana.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="callout callout-exercise">
+                <strong>Exercise:</strong>
+                Add all of these services to <code>docker-compose.yml</code>:
+                <ul>
+                  <li><code>otel-collector</code></li>
+                  <li><code>prometheus</code></li>
+                  <li><code>loki</code></li>
+                  <li><code>tempo</code></li>
+                  <li>Your two app services</li>
+                </ul>
+                Wire environment variables so the app services know where the
+                Collector lives.
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Checkpoint C – Metrics pipeline:</strong>
+                <ul class="checklist">
+                  <li>
+                    Go to <strong>Prometheus → Targets</strong> (e.g.
+                    <code>http://localhost:9090/targets</code>) and confirm the
+                    Collector target is <strong>UP</strong>.
+                  </li>
+                  <li>
+                    In the Prometheus graph UI, you can find at least one metric
+                    coming from your services (e.g. a counter or histogram).
+                  </li>
+                </ul>
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Checkpoint D – Logs & traces:</strong>
+                <ul class="checklist">
+                  <li>
+                    In Grafana → Explore → Loki, you can query logs like
+                    <code>{service_name="api-service"}</code> and see entries.
+                  </li>
+                  <li>
+                    In Grafana → Explore → Tempo, you can filter by your service
+                    name and see traces after sending a few requests.
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Section 5 -->
+            <section id="s5" class="module-section">
+              <h2>5. Phase 3 – Dashboards & load simulator UI</h2>
+              <p>
+                Once telemetry flows, you’ll give it a face: dashboards and a
+                small web UI to generate traffic.
+              </p>
+
+              <div class="term">
+                <h3>Step 5.1 – Grafana provisioning</h3>
+                <p>
+                  In the <code>grafana/</code> folder, set up provisioning so
+                  that Grafana automatically knows about your data sources and
+                  dashboards.
+                </p>
+                <ul>
+                  <li>
+                    Define data sources for Prometheus, Loki, and Tempo with
+                    stable UIDs.
+                  </li>
+                  <li>
+                    Configure a dashboards provider that loads JSON files from
+                    <code>grafana/dashboards/</code>.
+                  </li>
+                </ul>
+                <p>
+                  Initially, you can create dashboards through the Grafana UI,
+                  then export them as JSON and save them into this directory.
+                </p>
+              </div>
+
+              <div class="term">
+                <h3>Step 5.2 – Build your “Observable Orders” dashboard</h3>
+                <p>
+                  Create a dashboard that helps you understand the behaviour of
+                  your system. For example:
+                </p>
+                <ul>
+                  <li>Orders created per second.</li>
+                  <li>Failed orders per second.</li>
+                  <li>Error rate (%) over a time window.</li>
+                  <li>Order value percentiles (e.g. P50, P90, P99).</li>
+                  <li>Panels showing API and worker logs.</li>
+                  <li>
+                    A trace list panel (if you want to get fancy with Tempo).
+                  </li>
+                </ul>
+              </div>
+
+              <div class="term">
+                <h3>Step 5.3 – Load simulator web page</h3>
+                <p>
+                  Finally, add a small HTML page served by your API service (for
+                  example, at <code>/simulate</code>) that lets you trigger
+                  traffic:
+                </p>
+                <ul>
+                  <li>
+                    Inputs for number of orders, % to reprocess, and duration.
+                  </li>
+                  <li>
+                    A button that starts a background job which calls your own
+                    API.
+                  </li>
+                  <li>
+                    A simple message or countdown while the simulation runs.
+                  </li>
+                </ul>
+                <p>
+                  On API startup, you may also run a small “seed” simulation
+                  automatically so that dashboards are never completely empty.
+                </p>
+              </div>
+
+              <div class="callout callout-exercise">
+                <strong>Exercise:</strong>
+                Design your dashboard layout. Decide:
+                <ul>
+                  <li>
+                    Which panels go on the top row (e.g. high-level KPIs).
+                  </li>
+                  <li>Which panels show logs vs metrics.</li>
+                  <li>
+                    Where you’d like to surface traces (e.g. an “Investigate
+                    slow requests” panel).
+                  </li>
+                </ul>
+                Implement that layout and export it to JSON for provisioning.
+              </div>
+
+              <div class="callout callout-note">
+                <strong>Checkpoint E – End-to-end demo:</strong>
+                <ul class="checklist">
+                  <li>Start the stack with Docker Compose.</li>
+                  <li>Visit your load simulator page and run a simulation.</li>
+                  <li>
+                    Open Grafana and watch metrics move, logs appear, and traces
+                    form.
+                  </li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- Section 6 -->
+            <section id="s6" class="module-section">
+              <h2>6. Final checklist & model answer</h2>
+              <p>
+                You now have a full observability playground. Before looking at
+                any reference implementation, use this checklist to evaluate
+                your work.
+              </p>
+
+              <h3>Final checklist</h3>
+              <ul class="checklist">
+                <li>
+                  Your API and worker services run cleanly and respond to health
+                  checks.
+                </li>
+                <li>Orders can be created, fetched, and reprocessed.</li>
+                <li>
+                  OpenTelemetry is configured in both services (traces, metrics,
+                  logs).
+                </li>
+                <li>
+                  The Collector starts without errors and exposes a Prometheus
+                  endpoint.
+                </li>
+                <li>
+                  Prometheus shows the Collector target as <strong>UP</strong>.
+                </li>
+                <li>
+                  Loki receives logs for both services and you can query them in
+                  Grafana.
+                </li>
+                <li>
+                  Tempo receives traces and you can view them in Grafana
+                  Explore.
+                </li>
+                <li>
+                  Grafana auto-loads at least one dashboard via provisioning.
+                </li>
+                <li>
+                  Your dashboard includes both metrics and logs (and optionally
+                  traces).
+                </li>
+                <li>
+                  Your load simulator UI can generate visible traffic on demand.
+                </li>
+              </ul>
+
+              <div class="callout callout-note">
+                <strong>How the model answer fits in:</strong>
+                you’ll be given a complete version of this project as a
+                reference. Use it to compare:
+                <ul>
+                  <li>How the services are structured.</li>
+                  <li>Which metrics and labels were chosen.</li>
+                  <li>How the dashboard is organized.</li>
+                  <li>How the load simulator UI was implemented.</li>
+                </ul>
+                Try to understand <em>why</em> each design decision was made,
+                not just how it was coded.
+              </div>
+
+              <div class="callout callout-exercise">
+                <strong>Reflection exercise:</strong>
+                Write down a short paragraph answering:
+                <ul>
+                  <li>
+                    What would you change or extend in a “v2” of this project?
+                  </li>
+                  <li>
+                    How could you apply this pattern to a real app you care
+                    about?
+                  </li>
+                </ul>
+              </div>
+
+              <button class="btn primary module-complete-btn" id="mark-complete-btn">
+              Mark this module as complete
+            </button>
+            <p class="complete-status" id="complete-status">
+              Not marked as complete yet.
+            </p>
+            </section>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <span>Web Analytics & Observability Tutorial</span>
+        <span>Capstone Project – Observable Orders</span>
+      </div>
+    </footer>
+
+    <script src="module.js"></script>
+  </body>
+</html>
